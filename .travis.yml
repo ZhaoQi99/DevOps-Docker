@@ -1,0 +1,87 @@
+language: python
+sudo: true
+services:
+  - postgresql
+  - docker
+cache:
+  - pip
+  - yarn
+  - npm
+before_script:
+  - COMMIT_ID=$(git rev-parse --short HEAD)
+  - echo $COMMIT_ID
+install:
+  - pip install -r qops_server/requirements.txt
+  - pip install -r qops_server/dev-requirements.txt
+  - pip freeze
+env:
+  - DOCKER_USERNAME=zhaoqi99
+jobs:
+  include:
+    - stage: test
+      name: "Code style"
+      python: 3.6
+      script:
+        - cd qops_server && make check
+    - stage: test
+      name: "Unit test"
+      python: 3.6
+      script:
+        - psql -c 'create database test;' -U postgres
+        - cd qops_server
+        - make makemigrations
+        - make migrate
+        - make test
+      env:
+        - ENV=test
+    - stage: build
+      name: "Build backend image"
+      install: skip
+      python: 3.6
+      script:
+        - cd qops_server
+        - docker build -t qops-server .
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker images
+        - docker tag qops-server $DOCKER_USERNAME/qops-server:$COMMIT_ID
+        - docker push $DOCKER_USERNAME/qops-server:$COMMIT_ID
+        - if [ "$TRAVIS_BRANCH" = "master" ]; then docker tag qops-server $DOCKER_USERNAME/qops-server:latest; fi;
+        - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DOCKER_USERNAME/qops-server:latest; fi;
+        - echo "Build backend image Success!"
+        - docker run --name=qops-server  --net=host --restart=always -d $DOCKER_USERNAME/qops-server:$COMMIT_ID
+    - stage: build
+      name: "Build frontend image"
+      install: skip
+      script:
+        - cd qops_web
+        - docker build -t qops-web .
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker images
+        - docker tag qops-web $DOCKER_USERNAME/qops-web:$COMMIT_ID
+        - docker push $DOCKER_USERNAME/qops-web:$COMMIT_ID
+        - if [ "$TRAVIS_BRANCH" = "master" ]; then docker tag qops-web $DOCKER_USERNAME/qops-web:latest; fi;
+        - if [ "$TRAVIS_BRANCH" = "master" ]; then docker push $DOCKER_USERNAME/qops-web:latest; fi;
+        - echo "Build frontend image Success!"
+        - docker run --name=qops-web  --net=host --restart=always -d $DOCKER_USERNAME/qops-web:$COMMIT_ID
+    - stage: deploy
+      name: "Deploy backend"
+      install: skip
+      script:
+        - sudo apt-get install sshpass -y
+        - export SSHPASS=$SERVER_PASSWOED
+        - sshpass -e ssh root@$PRO_IP -o stricthostkeychecking=no 'docker pull zhaoqi99/qops-server:latest && docker stop qops-server && docker rm qops-server && docker run --name=qops-server  -p 8080:80 --restart=always -d zhaoqi99/qops-server:latest && exit'
+        - echo "Deploy backend success!"
+    - stage: deploy
+      name: "Deploy frontend"
+      install: skip
+      script:
+        - sudo apt-get install sshpass -y
+        - export SSHPASS=$SERVER_PASSWOED
+        - sshpass -e ssh root@$PRO_IP -o stricthostkeychecking=no 'docker pull zhaoqi99/qops-web:latest && docker stop qops-web && docker rm qops-web && docker run --name=qops-web  --net=host --restart=always -d zhaoqi99/qops-web:latest && exit'
+        - echo "Deploy frontend Success!"
+stages:
+  - test
+  - build
+  - name: deploy
+    if: branch = master
+    fast_finish: true

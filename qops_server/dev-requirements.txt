@@ -1,0 +1,9 @@
+-i http://mirrors.aliyun.com/pypi/simple/
+--trusted-host mirrors.aliyun.com
+entrypoints==0.3
+flake8==3.7.9
+isort==4.3.21
+mccabe==0.6.1
+pycodestyle==2.5.0
+pyflakes==2.1.1
+yapf==0.29.0

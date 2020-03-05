@@ -1,0 +1,16 @@
+[[source]]
+name = "pypi"
+url = "http://mirrors.aliyun.com/pypi/simple/"
+verify_ssl = false
+
+[dev-packages]
+isort = "==4.3.21"
+yapf = "==0.29.0"
+flake8 = "==3.7.9"
+
+[packages]
+django = "==3.0.3"
+psycopg2-binary = "==2.8.4"
+
+[requires]
+python_version = "3.7"

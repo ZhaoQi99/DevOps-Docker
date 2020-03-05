@@ -1,0 +1,4 @@
+venv/
+**/migrations/**
+**/tests/**
+__pycache__/
