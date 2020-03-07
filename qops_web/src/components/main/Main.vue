@@ -1,61 +1,150 @@
 <template>
-  <v-app>
-    <ToolBar @changeDrawer="drawer = !drawer"></ToolBar>
-    <Menu :drawer="drawer" :menu-list="menuList"></Menu>
-    <v-content>
-      <v-container fluid>
-        <transition name="move" mode="out-in">
-          <router-view></router-view>
-        </transition>
-      </v-container>
-    </v-content>
-    <Footer></Footer>
-  </v-app>
+  <Layout style="height: 100%" class="main">
+    <Sider
+      hide-trigger
+      collapsible
+      :width="230"
+      :collapsed-width="64"
+      breakpoint="xl"
+      v-model="collapsed"
+      class="left-sider"
+      :style="{ overflow: 'hidden' }"
+    >
+      <side-menu
+        accordion
+        ref="sideMenu"
+        :active-name="$route.name"
+        :collapsed="collapsed"
+        @on-select="turnToPage"
+        :menu-list="menuList"
+      >
+        <!-- 需要放在菜单上面的内容，如Logo，写在side-menu标签内部，如下 -->
+        <div class="logo-con">
+          <img
+            v-show="!collapsed"
+            style="width:125px; height:45px; border-radius:5px 5px 5px 0; margin-left: 20px;"
+            :src="maxLogo"
+            key="max-logo"
+          />
+          <img v-show="collapsed" :src="minLogo" key="min-logo" />
+        </div>
+      </side-menu>
+    </Sider>
+    <Layout>
+      <Header class="header-con">
+        <header-bar
+          :collapsed="collapsed"
+          @on-coll-change="handleCollapsedChange"
+        >
+          <user :user-avator="userAvator" :nick-name="nickName" />
+          <language
+            v-if="$config.useI18n"
+            @on-lang-change="setLocal"
+            style="margin-right: 10px;"
+            :lang="local"
+          />
+          <fullscreen v-model="isFullscreen" style="margin-right: 10px;" />
+        </header-bar>
+      </Header>
+      <Content class="main-content-con">
+        <Layout class="main-layout-con">
+          <Content class="content-wrapper">
+            <router-view />
+          </Content>
+        </Layout>
+      </Content>
+      <copyRight></copyRight>
+    </Layout>
+  </Layout>
 </template>
-
 <script>
-import Menu from "./components/Menu";
-import ToolBar from "./components/ToolBar";
-import Footer from "./components/Footer";
+import SideMenu from "./components/side-menu";
+import HeaderBar from "./components/header-bar";
+import User from "./components/user";
+import Fullscreen from "./components/fullscreen";
+import Language from "./components/language";
+import { mapMutations, mapActions } from "vuex";
+import minLogo from "@/assets/logo.png";
+import maxLogo from "@/assets/logo.png";
+import "./main.less";
+import copyRight from "./components/footer/copyright";
 export default {
-  name: "main",
+  name: "Main",
+  components: {
+    SideMenu,
+    HeaderBar,
+    Language,
+    Fullscreen,
+    User,
+    copyRight
+  },
   data() {
     return {
-      drawer: false,
-      menuList: [
-        {
-          to: "/login",
-          icon: "mdi-view-dashboard",
-          text: "测试登录"
-        },
-        {
-          to: "/dashboard",
-          icon: "mdi-speedometer",
-          text: "仪表盘"
-        },
-        {
-          icon: "mdi-settings",
-          text: "系统管理",
-          children: [
-            {
-              to: "/account/user",
-              icon: "mdi-account",
-              text: "用户管理"
-            },
-            {
-              to: "/account/role",
-              icon: "mdi-account-multiple",
-              text: "角色管理"
-            }
-          ]
-        }
-      ]
+      collapsed: false,
+      minLogo,
+      maxLogo,
+      isFullscreen: false
     };
   },
-  components: {
-    Menu,
-    ToolBar,
-    Footer
+  computed: {
+    userAvator() {
+      return this.$store.state.user.avatorImgPath;
+    },
+    nickName() {
+      return this.$store.state.user.nickName;
+    },
+    menuList() {
+      return this.$store.getters.menuList;
+    },
+    local() {
+      return this.$store.state.app.local;
+    },
+    hasReadErrorPage() {
+      return this.$store.state.app.hasReadErrorPage;
+    }
+  },
+  methods: {
+    ...mapMutations(["setBreadCrumb", "setLocal"]),
+    ...mapActions(["handleLogin"]),
+    turnToPage(route) {
+      let { name, params, query } = {};
+      if (typeof route === "string") name = route;
+      else {
+        name = route.name;
+        params = route.params;
+        query = route.query;
+      }
+      if (name.indexOf("isTurnByHref_") > -1) {
+        window.open(name.split("_")[1]);
+        return;
+      }
+      this.$router.push({
+        name,
+        params,
+        query
+      });
+    },
+    handleCollapsedChange(state) {
+      this.collapsed = state;
+    },
+    handleClick(item) {
+      this.turnToPage(item);
+    }
+  },
+  watch: {
+    $route(newRoute) {
+      // const { name, query, params, meta } = newRoute;
+      this.setBreadCrumb(newRoute);
+      this.$refs.sideMenu.updateOpenName(newRoute.name);
+    }
+  },
+  mounted() {
+    /**
+     * @description 初始化设置面包屑导航
+     */
+    this.setBreadCrumb(this.$route);
+    // 设置初始语言
+    this.setLocal(this.$i18n.locale);
   }
 };
 </script>

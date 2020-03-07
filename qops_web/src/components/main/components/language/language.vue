@@ -49,8 +49,7 @@ export default {
   },
   methods: {
     selectLang(name) {
-      console.log(name);
-      // this.$emit("on-lang-change", name);
+      this.$emit("on-lang-change", name);
     }
   }
 };
