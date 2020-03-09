@@ -1,7 +1,9 @@
 -i http://mirrors.aliyun.com/pypi/simple/
 --trusted-host mirrors.aliyun.com
 asgiref==3.2.3
+django-cors-headers==3.2.1
 django==3.0.3
+djangorestframework==3.11.0
 psycopg2-binary==2.8.4
 pytz==2019.3
 sqlparse==0.3.1

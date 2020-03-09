@@ -11,6 +11,8 @@ flake8 = "==3.7.9"
 [packages]
 django = "==3.0.3"
 psycopg2-binary = "==2.8.4"
+djangorestframework = "==3.11.0"
+django-cors-headers = "==3.2.1"
 
 [requires]
 python_version = "3.7"
