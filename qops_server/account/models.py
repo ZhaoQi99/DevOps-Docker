@@ -1,8 +1,12 @@
-from django.db import models
-from django.utils.translation import gettext_lazy as _
+import binascii
+import os
+
+from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 def update_last_login(sender, user, **kwargs):
@@ -88,3 +92,53 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return f'{self.username}'
+
+
+def _default_expire_time():
+    return timezone.now() + Token.token_expire
+
+
+class Token(models.Model):
+    token_length = settings.AUTH_CONFIG.get('TOKEN_LENGTH')
+    token_expire = settings.AUTH_CONFIG.get('AUTH_TOKEN_EXPIRE')
+    user = models.ForeignKey(
+        'User', verbose_name=_("User"), related_name='tokens', on_delete=models.CASCADE, null=True, blank=False
+    )
+    created = models.DateTimeField(_('create time'), auto_now_add=True)
+    expired = models.DateTimeField(_('token expire time'), default=_default_expire_time)
+    token = models.TextField(_('token'), blank=True)
+
+    class Meta:
+        ordering = ('user', )
+        verbose_name = _("Token")
+        verbose_name_plural = _("Tokens")
+
+    def save(self, *args, **kwargs):
+        if not self.token:
+            self.token = self.generate_key()
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'Token for {self.user.username} ({self.token})'
+
+    def generate_key(self):
+        return binascii.hexlify(os.urandom(int(self.token_length / 2))).decode()
+
+    def verify(self):
+        return self.check_exp() and self.token_length == len(self.token)
+
+    def check_exp(self):
+        return timezone.now() < self.expired
+
+    def refresh_token(self):
+        self.token = self.generate_key()
+        self.expired = timezone.now() + self.token_expire
+        self.save(update_fields=['token', 'expired'])
+
+    def refresf_exp(self):
+        self.expired = timezone.now() + self.token_expire
+        self.save(update_fields=['expired'])
+
+    @classmethod
+    def create_token(cls, user):
+        return Token.objects.create(user=user).token

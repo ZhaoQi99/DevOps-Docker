@@ -1,8 +1,9 @@
+import getpass
+import sys
+
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from django.utils.translation import gettext_lazy as _
-import sys
-import getpass
 
 UserModel = get_user_model()
 

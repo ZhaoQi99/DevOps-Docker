@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,17 +32,14 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'account.apps.AccountConfig'
+    'django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions',
+    'django.contrib.messages', 'django.contrib.staticfiles', 'corsheaders', 'account.apps.AccountConfig'
 ]
 
 MIDDLEWARE = [
+    'qops_server.middleware.ProcessExceptionMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'qops_server.middleware.MyMiddleware',
 ]
 
 ROOT_URLCONF = 'qops_server.urls'
@@ -124,3 +123,12 @@ STATIC_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file
 STATIC_ROOT = os.path.join(STATIC_DIR, 'static')
 
 AUTH_USER_MODEL = 'account.User'
+
+AUTH_CONFIG = {
+    'AUTH_TOKEN_EXPIRE': timedelta(minutes=10),
+    'TOKEN_LENGTH': 40,
+    'AUTH_EXCLUDE': ('/api/account/login/', '/admin', '/static')
+}
+
+# Cors
+CORS_ORIGIN_ALLOW_ALL = True

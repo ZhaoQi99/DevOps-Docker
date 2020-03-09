@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from .base import *
 
 DEBUG = True
@@ -11,3 +13,5 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+AUTH_CONFIG['AUTH_TOKEN_EXPIRE'] = timedelta(days=10)
