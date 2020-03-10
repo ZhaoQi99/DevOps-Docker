@@ -55,7 +55,7 @@ class ProcessExceptionMiddleware:
 
     def __call__(self, request):
         if settings.DEBUG is True:
-            print(request.data)
+            print(request.body)
         response = self.get_response(request)
         return response
 

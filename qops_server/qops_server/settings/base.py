@@ -31,15 +31,19 @@ ALLOWED_HOSTS = [
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions',
-    'django.contrib.messages', 'django.contrib.staticfiles', 'corsheaders', 'account.apps.AccountConfig'
+INSTALLED_APPS = [ # yapf: disable
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'account.apps.AccountConfig'
 ]
 
 MIDDLEWARE = [
     'qops_server.middleware.ProcessExceptionMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -129,6 +133,3 @@ AUTH_CONFIG = {
     'TOKEN_LENGTH': 40,
     'AUTH_EXCLUDE': ('/api/account/login/', '/admin', '/static')
 }
-
-# Cors
-CORS_ORIGIN_ALLOW_ALL = True

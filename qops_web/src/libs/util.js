@@ -1,21 +1,7 @@
-import Cookies from "js-cookie";
-// cookie保存的天数
-import config from "@/config";
 import { forEach, hasOneOf, objEqual } from "@/libs/tools";
 
 export const setTitle = title => {
   window.document.title = `${title} -QOps` || "QOps";
-};
-
-export const TOKEN_KEY = "auth_key";
-export const setToken = token => {
-  Cookies.set(TOKEN_KEY, token, { expires: config.cookieExpires || 1 });
-};
-
-export const getToken = () => {
-  const token = Cookies.get(TOKEN_KEY);
-  if (token) return token;
-  else return false;
 };
 
 export const hasChild = item => {
@@ -101,7 +87,6 @@ export const showTitle = (item, vm) =>
   vm.$config.useI18n
     ? vm.$t(item.name)
     : (item.meta && item.meta.title) || item.name;
-
 
 /**
  * @param {Array} routers 路由列表数组
