@@ -4,6 +4,16 @@ import Dashboard from "@/views/dashboard";
 
 export const routes = [
   {
+    path: "/login",
+    name: "login",
+    meta: {
+      title: "Login - 登录",
+      icon: "md-home",
+      hideInMenu: true
+    },
+    component: () => import("@/views/login/login.vue")
+  },
+  {
     path: "/",
     name: "home",
     component: Main,

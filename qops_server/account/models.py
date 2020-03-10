@@ -109,9 +109,9 @@ class Token(models.Model):
     token = models.TextField(_('token'), blank=True)
 
     class Meta:
-        ordering = ('user', )
+        ordering = ('-created', )
         verbose_name = _("Token")
-        verbose_name_plural = _("Tokens")
+        verbose_name_plural = verbose_name
 
     def save(self, *args, **kwargs):
         if not self.token:
