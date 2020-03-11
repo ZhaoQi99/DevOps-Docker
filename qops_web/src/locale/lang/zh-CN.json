@@ -1,4 +1,7 @@
 {
   "home": "首页",
-  "Login Success": "登录成功"
+  "Login Success": "登录成功",
+  "Submit": "提交",
+  "Reset": "重置",
+  "Password Change Success": "密码修改成功"
 }

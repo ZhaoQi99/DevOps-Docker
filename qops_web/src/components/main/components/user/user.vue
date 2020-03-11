@@ -31,12 +31,12 @@
           <Input type="password" v-model="form.passwdCheck"></Input>
         </FormItem>
         <FormItem>
-          <Button type="primary" @click="handleSubmit('formCustom')"
-            >Submit</Button
-          >
-          <Button @click="handleReset('formCustom')" style="margin-left: 8px"
-            >Reset</Button
-          >
+          <Button type="primary" @click="handleSubmit('formCustom')">{{
+            $t("Submit")
+          }}</Button>
+          <Button @click="handleReset('formCustom')" style="margin-left: 8px">{{
+            $t("Reset")
+          }}</Button>
         </FormItem>
       </Form>
     </Modal>
@@ -117,16 +117,9 @@ export default {
             new_password1: this.form.newPasswd,
             new_password2: this.form.passwdCheck
           };
-          this.handlePassword(dataInfo).then(res => {
-            if (res.code === 0) {
-              this.$Message.success(`${res.msg}`);
-              location.reload();
-            } else {
-              this.$Message.error(`${res.msg}`);
-            }
+          this.handlePassword(dataInfo).then(() => {
+            this.$Message.success(this.$i18n.t("Login success"));
           });
-        } else {
-          this.$Message.error("验证失败!");
         }
       });
     },
@@ -136,6 +129,7 @@ export default {
     handleClick(name) {
       switch (name) {
         case "logout":
+          this.$Message.success(this.$i18n.t("Password change success"));
           this.handleLogOut().then(() => {
             this.$router.push({
               name: "login"
