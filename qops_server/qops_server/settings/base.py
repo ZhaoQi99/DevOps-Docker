@@ -133,3 +133,4 @@ AUTH_CONFIG = {
     'TOKEN_LENGTH': 40,
     'AUTH_EXCLUDE': ('/api/account/login/', '/admin', '/static')
 }
+REST_FRAMEWORK = {'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S"}

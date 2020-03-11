@@ -50,6 +50,13 @@ export default {
           });
       });
     },
+    handleLogOut() {
+      return new Promise(resolve => {
+        localStorage.clear();
+
+        resolve();
+      });
+    },
     handlePassword({ commit }, data) {
       return new Promise((resolve, reject) => {
         password(data)

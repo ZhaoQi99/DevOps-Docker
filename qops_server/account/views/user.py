@@ -1,12 +1,13 @@
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
+
 from account.models import Token, User
 from utils.api import APIView
 from utils.exceptions import AuthenticationFailed, UserIsNotActive, UsertDoesNotExist
 
-from .serializers import LoginSerializer
-from .signals import user_logged_in
+from ..serializers import LoginSerializer
+from ..signals import user_logged_in
 
 
 @method_decorator(csrf_exempt, name='dispatch')

@@ -52,21 +52,20 @@ class APIView(View):
         try:
             limit = int(request.GET.get("limit", "10"))
         except ValueError:
-            limit = 10
-        if limit < 0 or limit > 250:
-            limit = 10
+            limit = 0
+        limit = 0 if limit < 0 else limit
         try:
             offset = int(request.GET.get("offset", "0"))
         except ValueError:
             offset = 0
-        if offset < 0:
-            offset = 0
-        results = query_set[offset:offset + limit]
+        offset = 0 if offset < 0 else offset
+        results = query_set[offset:offset + limit] if limit else query_set[offset:]
+
         if object_serializer:
             count = query_set.count()
             results = object_serializer(results, many=True).data
         else:
-            count = query_set.count()
+            count = len(query_set)
         data = {"list": results, "total": count}
         return data
 

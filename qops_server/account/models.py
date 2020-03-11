@@ -70,6 +70,7 @@ class User(AbstractBaseUser):
             'Unselect this instead of deleting accounts.'
         ),
     )
+    roles = models.ManyToManyField('Role', verbose_name=_('user roles'), blank=True)
     objects = UserManage()
 
     @property
@@ -110,7 +111,7 @@ class Token(models.Model):
 
     class Meta:
         ordering = ('-created', )
-        verbose_name = _("Token")
+        verbose_name = _("token")
         verbose_name_plural = verbose_name
 
     def save(self, *args, **kwargs):
@@ -142,3 +143,46 @@ class Token(models.Model):
     @classmethod
     def create_token(cls, user):
         return Token.objects.create(user=user).token
+
+
+class Role(models.Model):
+    name = models.CharField(max_length=32, verbose_name='名称')
+    permissions = models.ManyToManyField('Permission', verbose_name=_('role permissions'), blank=True)
+    menus = models.ManyToManyField('Menu', verbose_name=_('role menu'))
+    status = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('role')
+        verbose_name_plural = verbose_name
+
+
+class Menu(models.Model):
+    name = models.CharField(max_length=50, blank=False)
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+    path = models.CharField(max_length=100, blank=False)
+
+    class Meta:
+        verbose_name = _('menu')
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+
+class Permission(models.Model):
+    METHOD_CHOICES = (('GET', 'GET'), ('POST', 'POST'), ('PUT', 'PUT'), ('DELETE', 'DELETE'), ('ALL', 'ALL'))
+    url = models.CharField(max_length=50, verbose_name=_('url'))
+    name = models.CharField(max_length=50, verbose_name=_('name'))
+    method = models.CharField(max_length=10, verbose_name=_('HTTP method'), choices=METHOD_CHOICES)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('permission')
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
