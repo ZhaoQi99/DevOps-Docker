@@ -203,9 +203,26 @@ export default {
     },
     // 删除
     handleDelete(row) {
-      deleteMenu({ obj_id: row.id }).then(() => {
-        this.$Message.success(this.$i18n.t("delete success"));
-        this.tableData.splice(row._index, 1);
+      this.$Modal.confirm({
+        title: this.$i18n.t("Confirm delete"),
+        content: this.$i18n.t("Are you sure you want to delete {msg} ?", {
+          msg: row.name
+        }),
+        loading: true,
+        onOk: () => {
+          deleteMenu({ obj_id: row.id })
+            .then(() => {
+              this.$Message.success(this.$i18n.t("delete success"));
+              this.tableData.splice(row._index, 1);
+              this.$Modal.remove();
+            })
+            .catch(() => {
+              this.$Modal.remove();
+            });
+        },
+        onCancel: () => {
+          this.$Message.info(this.$i18n.t("cancel"));
+        }
       });
     },
     handleSearch() {

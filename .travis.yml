@@ -69,7 +69,7 @@ jobs:
       script:
         - sudo apt-get install sshpass -y
         - export SSHPASS=$SERVER_PASSWOED
-        - sshpass -e ssh root@$PRO_IP -o stricthostkeychecking=no 'docker pull zhaoqi99/qops-server:latest && docker stop qops-server && docker rm qops-server && docker run --name=qops-server  -p 8080:80 --restart=always -d zhaoqi99/qops-server:latest && exit'
+        - sshpass -e ssh root@$PRO_IP -o stricthostkeychecking=no 'docker pull zhaoqi99/qops-server:latest && docker stop qops-server && docker rm qops-server && docker run --name=qops-server  --net=host --restart=always -d zhaoqi99/qops-server:latest && exit'
         - echo "Deploy backend success!"
     - stage: deploy
       name: "Deploy frontend"
