@@ -1,15 +1,15 @@
 from utils.api import APIView
-from utils.exceptions import PermissionDoesNotExist
+from utils.exceptions import MenuDoesNotExist
 from utils.serializer import IdSerializer
 
-from ..models import Permission
-from ..serializers import PermissionSerializer, UpdatePermissionSerializer
+from ..models import Menu
+from ..serializers import MenuSerializer, UpdateMenuSerializer
 
 
-class PermissionView(APIView):
-    def get(self, request, *args, **kwargs):
-        queryset = Permission.objects.all()
-        return self.success(self.paginate_data(request, queryset, PermissionSerializer))
+class MenuView(APIView):
+    def get(self, request):
+        queryset = Menu.objects.all()
+        return self.success(self.paginate_data(request, queryset, MenuSerializer))
 
     def delete(self, request, *args, **kwargs):
         serializer = IdSerializer(data=request.data)
@@ -17,25 +17,26 @@ class PermissionView(APIView):
         if not serializer.is_valid():
             self.error(serializer.errors)
         obj_id = serializer.validated_data['obj_id']
-        Permission.objects.filter(pk=obj_id).delete()
+        Menu.objects.filter(pk=obj_id).delete()
         return self.success(status=204)
 
     def put(self, request, *args, **kwargs):
-        serializer = UpdatePermissionSerializer(data=request.data)
+        serializer = UpdateMenuSerializer(data=request.data)
+
         if not serializer.is_valid():
             self.error(serializer.errors)
         obj_id = serializer.validated_data['obj_id']
-        queryset = Permission.objects.filter(pk=obj_id)
+        queryset = Menu.objects.filter(pk=obj_id)
         if not queryset:
-            raise PermissionDoesNotExist
+            raise MenuDoesNotExist
         serializer.validated_data.pop('obj_id')
         queryset.update(**serializer.validated_data)
         obj = queryset.first()
-        return self.success(PermissionSerializer(obj).data)
+        return self.success(MenuSerializer(obj).data)
 
     def post(self, request, *args, **kwargs):
-        serializer = PermissionSerializer(data=request.data)
+        serializer = MenuSerializer(data=request.data)
         if not serializer.is_valid():
             self.error(serializer.errors)
-        Permission.objects.create(**serializer.validated_data)
+        Menu.objects.create(**serializer.validated_data)
         return self.success(status=201)

@@ -43,3 +43,32 @@ export function getSelf() {
     method: "GET"
   });
 }
+export function listMenu(params) {
+  return axios.request({
+    url: "/account/menus/",
+    method: "get",
+    params: params
+  });
+}
+
+export function deleteMenu(data) {
+  return axios.request({
+    url: "/account/menus/",
+    method: "delete",
+    data: data
+  });
+}
+export function updateMenu(data) {
+  return axios.request({
+    url: "/account/menus/",
+    method: "put",
+    data: data
+  });
+}
+export function createMenu(data) {
+  return axios.request({
+    url: "/account/menus/",
+    method: "POST",
+    data: data
+  });
+}

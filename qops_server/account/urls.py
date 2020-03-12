@@ -1,9 +1,10 @@
 from django.urls import path
 
-from .views import LoginView, PermissionListView, SelfView
+from .views import LoginView, MenuView, PermissionView, SelfView
 
 urlpatterns = [
     path('login/', LoginView.as_view(), name='user_login'),
-    path('permissions/', PermissionListView.as_view(), name='list_permission'),
-    path('self/', SelfView.as_view(), name='user_self')
+    path('permissions/', PermissionView.as_view(), name='permission'),
+    path('self/', SelfView.as_view(), name='user_self'),
+    path('menus/', MenuView.as_view(), name='menus')
 ]

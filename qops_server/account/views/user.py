@@ -2,7 +2,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 
-from account.models import Token, User, Menu
+from account.models import Menu, Token, User
 from utils.api import APIView
 from utils.exceptions import AuthenticationFailed, UserIsNotActive, UsertDoesNotExist
 
