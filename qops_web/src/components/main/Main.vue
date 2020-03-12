@@ -63,12 +63,11 @@ import HeaderBar from "./components/header-bar";
 import User from "./components/user";
 import Fullscreen from "./components/fullscreen";
 import Language from "./components/language";
-import { mapMutations, mapActions } from "vuex";
+import { mapMutations } from "vuex";
 import minLogo from "@/assets/logo.png";
 import maxLogo from "@/assets/logo.png";
 import "./main.less";
 import copyRight from "./components/footer/copyright";
-import { getSelf } from "@/api/user";
 export default {
   name: "Main",
   components: {
@@ -106,7 +105,6 @@ export default {
   },
   methods: {
     ...mapMutations(["setBreadCrumb", "setLocal"]),
-    ...mapActions(["concatRoutes"]),
     turnToPage(route) {
       let { name, params, query } = {};
       if (typeof route === "string") name = route;
@@ -147,9 +145,6 @@ export default {
     // 设置初始语言
     this.setLocal(this.$i18n.locale);
     // 获取菜单
-    getSelf().then(res => {
-      this.concatRoutes(res.data.menus);
-    });
   }
 };
 </script>
