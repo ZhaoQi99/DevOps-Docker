@@ -68,6 +68,7 @@ import minLogo from "@/assets/logo.png";
 import maxLogo from "@/assets/logo.png";
 import "./main.less";
 import copyRight from "./components/footer/copyright";
+import { getSelf } from "@/api/user";
 export default {
   name: "Main",
   components: {
@@ -146,12 +147,9 @@ export default {
     // 设置初始语言
     this.setLocal(this.$i18n.locale);
     // 获取菜单
-    const rules = {
-      usermanage: true,
-      permissions: true,
-      roles: true
-    };
-    this.concatRoutes(rules);
+    getSelf().then(res => {
+      this.concatRoutes(res.data.menus);
+    });
   }
 };
 </script>

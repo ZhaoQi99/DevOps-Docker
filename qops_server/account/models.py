@@ -162,7 +162,7 @@ class Role(models.Model):
 class Menu(models.Model):
     name = models.CharField(max_length=50, blank=False)
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
-    path = models.CharField(max_length=100, blank=False)
+    key = models.CharField(max_length=100, blank=False)
 
     class Meta:
         verbose_name = _('menu')

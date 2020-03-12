@@ -9,10 +9,10 @@ format:
 	cat LOGO
 	isort -rc .
 	yapf --recursive -i .
-makemigrations:
+mmg:
 	cat LOGO
 	$(MANAGE_CMD) makemigrations
-migrate:
+mg:
 	cat LOGO
 	$(MANAGE_CMD) migrate
 dev:
