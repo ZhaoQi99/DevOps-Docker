@@ -2,6 +2,47 @@ import error from "./error";
 import Main from "@/components/main";
 import Dashboard from "@/views/dashboard";
 
+export const routerMap = [
+  {
+    path: "/usermanage",
+    name: "usermanage",
+    meta: {
+      icon: "md-contacts",
+      title: "用户管理",
+      hideInMenu: false
+    },
+    component: Main,
+    children: [
+      {
+        path: "permissions",
+        name: "permissions",
+        meta: {
+          icon: "ios-lock",
+          title: "权限列表"
+        },
+        component: () => import("@/views/user-manage/permission.vue")
+      },
+      {
+        path: "menus",
+        name: "menus",
+        meta: {
+          icon: "ios-menu",
+          title: "菜单组件"
+        },
+        // component: () => import("@/view/user-manage/routescomponents.vue")
+      },
+      {
+        path: "roles",
+        name: "roles",
+        meta: {
+          icon: "ios-person",
+          title: "角色管理"
+        },
+        // component: () => import("@/view/user-manage/role.vue")
+      }
+    ]
+  }
+];
 export const routes = [
   {
     path: "/login",
@@ -19,7 +60,8 @@ export const routes = [
     component: Main,
     redirect: "/dashboard",
     meta: {
-      hideInMenu: false
+      hideInMenu: false,
+      icon: "md-home"
     },
     children: [
       {
@@ -34,6 +76,7 @@ export const routes = [
       }
     ]
   },
+
   {
     path: "/doc",
     name: "doc",

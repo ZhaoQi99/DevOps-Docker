@@ -94,7 +94,7 @@ export default {
       return this.$store.state.user.nickName;
     },
     menuList() {
-      return this.$store.getters.menuList;
+      return this.$store.state.router.menuList;
     },
     local() {
       return this.$store.state.app.local;
@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setBreadCrumb", "setLocal"]),
-    ...mapActions(["handleLogin"]),
+    ...mapActions(["concatRoutes"]),
     turnToPage(route) {
       let { name, params, query } = {};
       if (typeof route === "string") name = route;
@@ -145,6 +145,13 @@ export default {
     this.setBreadCrumb(this.$route);
     // 设置初始语言
     this.setLocal(this.$i18n.locale);
+    // 获取菜单
+    const rules = {
+      usermanage: true,
+      permissions: true,
+      roles: true
+    };
+    this.concatRoutes(rules);
   }
 };
 </script>

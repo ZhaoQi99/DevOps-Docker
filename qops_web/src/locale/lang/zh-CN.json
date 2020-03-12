@@ -3,5 +3,17 @@
   "Login Success": "登录成功",
   "Submit": "提交",
   "Reset": "重置",
-  "Password Change Success": "密码修改成功"
+  "Password Change Success": "密码修改成功",
+  "edit": "编辑",
+  "delete": "删除",
+  "cancel": "取消",
+  "delete success": "删除成功",
+  "Confirm delete": "确认删除",
+  "Are you sure you want to delete {msg} ?": "你确定要删除 {msg} 吗？",
+  "create success": "创建成功",
+  "update success": "更新成功",
+  "permissions": "权限管理",
+  "usermanage": "用户管理",
+  "roles": "角色管理",
+  "menus": "菜单管理"
 }

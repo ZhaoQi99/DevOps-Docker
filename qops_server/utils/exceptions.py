@@ -67,6 +67,10 @@ class UserIsNotActive(BaseException):
     msg = _('User is not active.')
 
 
+class PermissionDoesNotExist(ObjectDoesNotExist):
+    msg = _('Permission does not exists.')
+
+
 # _('The two password fields didn\'t match.')
 # class PasswordIncorrect(ObjectDoesNotExist):
 #     status = 1004

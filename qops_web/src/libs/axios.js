@@ -28,9 +28,7 @@ class HttpRequest {
     // 请求拦截
     instance.interceptors.request.use(
       config => {
-        if (localStorage.Token !== undefined) {
-          config.headers["Authorization"] = "Bearer" + " " + localRead("token");
-        }
+        config.headers["Authorization"] = "Bearer" + " " + localRead("token");
         // 添加全局的loading...
         if (!Object.keys(this.queue).length) {
           // Spin.show() // 不建议开启，因为界面不友好

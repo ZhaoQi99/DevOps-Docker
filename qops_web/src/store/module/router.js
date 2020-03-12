@@ -1,18 +1,21 @@
 import { routes, routerMap } from "@/router/routers";
 import { getMenuByRouter } from "@/libs/util";
-
+import router from "@/router";
 const state = {
   routers: routes,
-  hasGetRules: false
+  hasGetRules: false,
+  menuList: []
 };
 
-const getters = {
-  menuList: state => getMenuByRouter(state.routers, "all")
-};
+// const getters = {
+//   menuList: state => getMenuByRouter(state.routers, "all")
+// };
 const mutations = {
   CONCAT_ROUTES(state, routerList) {
     state.routers = routerList.concat(routes);
     state.hasGetRules = true;
+    router.addRoutes(routerList);
+    state.menuList = getMenuByRouter(state.routers, "all");
   }
 };
 
@@ -49,7 +52,6 @@ const actions = {
 
 export default {
   state,
-  getters,
   mutations,
   actions
 };
