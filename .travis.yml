@@ -29,8 +29,8 @@ jobs:
       script:
         - psql -c 'create database test;' -U postgres
         - cd qops_server
-        - make makemigrations
-        - make migrate
+        - make mmg
+        - make mg
         - make test
       env:
         - ENV=test
