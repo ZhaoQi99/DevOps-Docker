@@ -37,3 +37,9 @@ export function createPermission(data) {
     data: data
   });
 }
+export function getSelf() {
+  return axios.request({
+    url: "/account/self/",
+    method: "GET"
+  });
+}

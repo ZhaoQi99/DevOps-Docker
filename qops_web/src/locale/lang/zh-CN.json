@@ -13,7 +13,7 @@
   "create success": "创建成功",
   "update success": "更新成功",
   "permissions": "权限管理",
-  "usermanage": "用户管理",
+  "userManage": "用户管理",
   "roles": "角色管理",
   "menus": "菜单管理"
 }

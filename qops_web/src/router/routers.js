@@ -4,8 +4,8 @@ import Dashboard from "@/views/dashboard";
 
 export const routerMap = [
   {
-    path: "/usermanage",
-    name: "usermanage",
+    path: "/userManage",
+    name: "userManage",
     meta: {
       icon: "md-contacts",
       title: "用户管理",
