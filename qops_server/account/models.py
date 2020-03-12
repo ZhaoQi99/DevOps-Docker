@@ -176,7 +176,7 @@ class Permission(models.Model):
     METHOD_CHOICES = (('GET', 'GET'), ('POST', 'POST'), ('PUT', 'PUT'), ('DELETE', 'DELETE'), ('ALL', 'ALL'))
     url = models.CharField(max_length=50, verbose_name=_('url'))
     name = models.CharField(max_length=50, verbose_name=_('name'))
-    method = models.CharField(max_length=10, verbose_name=_('HTTP method'), choices=METHOD_CHOICES)
+    method = models.CharField(max_length=10, verbose_name=_('HTTP method'), choices=METHOD_CHOICES, default='ALL')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

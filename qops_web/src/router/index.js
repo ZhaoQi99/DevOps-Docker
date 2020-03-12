@@ -17,9 +17,8 @@ router.beforeEach((to, from, next) => {
   console.log(from);
   next();
 });
-router.afterEach(to => {
+router.afterEach(() => {
   ViewUI.LoadingBar.finish();
   window.scrollTo(0, 0);
-  console.log(to);
 });
 export default router;

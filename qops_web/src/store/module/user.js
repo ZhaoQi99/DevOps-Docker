@@ -26,6 +26,7 @@ export default {
     },
     setToken(state, token) {
       state.token = token;
+      localStorage.token = token;
     },
     setHasGetInfo(state, status) {
       state.hasGetInfo = status;
@@ -41,8 +42,9 @@ export default {
       return new Promise((resolve, reject) => {
         login({ username, password })
           .then(res => {
-            commit("setToken", res.token);
-            commit("setUserName", res.username);
+            const data = res.data;
+            commit("setToken", data.token);
+            // commit("setUserName", res.username);
             resolve(res);
           })
           .catch(err => {

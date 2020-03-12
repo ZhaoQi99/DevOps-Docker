@@ -59,6 +59,8 @@ class APIView(View):
         except ValueError:
             offset = 0
         offset = 0 if offset < 0 else offset
+        if object_serializer:
+            query_set = query_set.order_by('-id')  # Todo: support order params
         results = query_set[offset:offset + limit] if limit else query_set[offset:]
 
         if object_serializer:
@@ -72,7 +74,9 @@ class APIView(View):
     def dispatch(self, request, *args, **kwargs):
         # loads data
         request.data = dict()
-        if request.method not in ["GET", "DELETE"]:
+        if request.method not in [
+            "GET",
+        ]:
             content_type = request.META.get("CONTENT_TYPE", None)
             if not content_type:
                 raise ValueError(_('CONTENT_TYPE is required.'))

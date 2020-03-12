@@ -65,5 +65,5 @@ class ProcessExceptionMiddleware:
             traceback.print_exc()
             # return None  # using default debug page
         if not isinstance(exception, BaseException):
-            exception = UnknownException(msg=str(exception))
+            exception = UnknownException(msg=str(exception), errors=traceback.format_exc().splitlines())
         return JsonResponse(exception.as_dict(), status=exception.get_http_code())
