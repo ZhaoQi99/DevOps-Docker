@@ -1,2 +1,2 @@
-import FormGroup from './form-group.vue'
-export default FormGroup
+import FormGroup from "./form-group.vue";
+export default FormGroup;

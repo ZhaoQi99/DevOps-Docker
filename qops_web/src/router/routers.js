@@ -27,9 +27,9 @@ export const routerMap = [
         name: "menus",
         meta: {
           icon: "ios-menu",
-          title: "菜单组件"
+          title: "菜单管理"
         },
-        // component: () => import("@/view/user-manage/routescomponents.vue")
+        component: () => import("@/views/user-manage/menu.vue")
       },
       {
         path: "roles",
@@ -37,7 +37,7 @@ export const routerMap = [
         meta: {
           icon: "ios-person",
           title: "角色管理"
-        },
+        }
         // component: () => import("@/view/user-manage/role.vue")
       }
     ]
