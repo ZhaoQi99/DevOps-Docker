@@ -72,3 +72,40 @@ export function createMenu(data) {
     data: data
   });
 }
+export function listUser(params) {
+  return axios.request({
+    url: "/account/users/",
+    method: "get",
+    params: params
+  });
+}
+
+export function deleteUser(data) {
+  return axios.request({
+    url: "/account/users/",
+    method: "delete",
+    data: data
+  });
+}
+export function updateUser(data) {
+  return axios.request({
+    url: "/account/users/",
+    method: "put",
+    data: data
+  });
+}
+export function createUser(data) {
+  return axios.request({
+    url: "/account/users/",
+    method: "POST",
+    data: data
+  });
+}
+
+export function listRole(params) {
+  return axios.request({
+    url: "/account/roles/",
+    method: "get",
+    params: params
+  });
+}

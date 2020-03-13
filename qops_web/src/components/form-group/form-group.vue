@@ -18,6 +18,8 @@
       <component
         :is="item.type"
         :range="item.range"
+        :disabled="item.disabled === true ? true : false"
+        :multiple="item.multiple === true ? true : false"
         v-model="valueList[item.name]"
         :placeholder="item.placeholder ? item.placeholder : ''"
         :maxlength="

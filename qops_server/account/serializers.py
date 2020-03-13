@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from utils.serializer import IdSerializer
 
-from .models import Menu, Permission, User
+from .models import Menu, Permission, Role, User
 
 
 class LoginSerializer(serializers.Serializer):
@@ -49,4 +49,11 @@ class UpdateUserSerializer(serializers.ModelSerializer, IdSerializer):
     class Meta:
         model = User
         exclude = ('password', 'username')
+        read_only_fields = ('id', )
+
+
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Role
+        fields = '__all__'
         read_only_fields = ('id', )
