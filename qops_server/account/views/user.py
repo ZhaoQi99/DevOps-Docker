@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
@@ -5,8 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 from account.models import Menu, Token, User
 from utils.api import APIView
 from utils.exceptions import AuthenticationFailed, UserIsNotActive, UsertDoesNotExist
+from utils.serializer import IdSerializer
 
-from ..serializers import LoginSerializer
+from ..serializers import LoginSerializer, UpdateUserSerializer, UserListSerializer, UserSerializer
 from ..signals import user_logged_in
 
 
@@ -41,3 +43,45 @@ class SelfView(APIView):
         for key in list(Menu.objects.all().values_list('key', flat=True)):
             menus[key] = True if key in user_menus else False
         return self.success({'menus': menus})
+
+
+class UserView(APIView):
+    def get(self, request):
+        queryset = User.objects.all()
+        return self.success(self.paginate_data(request, queryset, UserListSerializer))
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if not serializer.is_valid():
+            self.error(serializer.errors)
+        with transaction.atomic():
+            roles = serializer.validated_data.pop('roles')
+            user = User.objects.create(**serializer.validated_data)
+            user.roles.set(roles)
+        return self.success(status=201)
+
+    def put(self, request):
+        serializer = UpdateUserSerializer(data=request.data)
+        if not serializer.is_valid():
+            self.error(serializer.errors)
+        with transaction.atomic():
+            roles = serializer.validated_data.pop('roles')
+            user_id = serializer.validated_data.pop('obj_id')
+            queryset = User.objects.filter(pk=user_id)
+            if not queryset:
+                raise UsertDoesNotExist
+            queryset.update(**serializer.validated_data)
+            user = queryset.first()
+            user.roles.set(roles)
+        return self.success(status=201)
+
+    def delete(self, request):
+        serializer = IdSerializer(data=request.data)
+        if not serializer.is_valid():
+            self.error(serializer.errors)
+        obj_id = serializer.validated_data['obj_id']
+        queryset = User.objects.filter(pk=obj_id)
+        if not queryset:
+            raise UsertDoesNotExist
+        queryset.delete()
+        return self.success(status=204)

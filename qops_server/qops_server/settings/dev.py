@@ -15,3 +15,4 @@ DATABASES = {
 }
 
 AUTH_CONFIG['AUTH_TOKEN_EXPIRE'] = timedelta(days=10)
+MIDDLEWARE.pop(5)  # CSRF

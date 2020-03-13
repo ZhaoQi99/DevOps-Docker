@@ -16,6 +16,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   to.meta.title && setTitle(to.meta.title);
   ViewUI.LoadingBar.start();
+  if (to.name === "login") next();
   if (!store.state.router.hasGetRules) {
     getSelf()
       .then(res => {
