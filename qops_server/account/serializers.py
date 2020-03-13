@@ -57,3 +57,8 @@ class RoleSerializer(serializers.ModelSerializer):
         model = Role
         fields = '__all__'
         read_only_fields = ('id', )
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)

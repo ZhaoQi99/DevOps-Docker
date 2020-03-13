@@ -109,3 +109,10 @@ export function listRole(params) {
     params: params
   });
 }
+export function changePassword(data) {
+  return axios.request({
+    url: "/account/self/password/",
+    method: "post",
+    data: data
+  });
+}

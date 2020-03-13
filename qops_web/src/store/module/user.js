@@ -1,8 +1,9 @@
-import { login, password } from "@/api/user";
+import { login, changePassword } from "@/api/user";
 
 export default {
   state: {
     userName: "",
+    nickName: "",
     userId: "",
     avatorImgPath:
       "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
@@ -33,6 +34,9 @@ export default {
     },
     setRules(state, rules) {
       state.rules = rules;
+    },
+    setNickName(state, nickName) {
+      state.nickName = nickName;
     }
   },
   actions: {
@@ -45,6 +49,8 @@ export default {
             const data = res.data;
             commit("setToken", data.token);
             // commit("setUserName", res.username);
+            commit("setUserId", data.user_id);
+            commit("setNickName", data.nick_name);
             resolve(res);
           })
           .catch(err => {
@@ -61,8 +67,9 @@ export default {
     },
     handlePassword({ commit }, data) {
       return new Promise((resolve, reject) => {
-        password(data)
+        changePassword(data)
           .then(() => {
+            this.$Message.success(this.$i18n.t("change password success"));
             commit("setToken", "");
             commit("setAccess", []);
             resolve({});
