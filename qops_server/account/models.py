@@ -149,7 +149,7 @@ class Token(models.Model):
 class Role(models.Model):
     name = models.CharField(max_length=32, verbose_name='名称')
     permissions = models.ManyToManyField('Permission', verbose_name=_('role permissions'), blank=True)
-    menus = models.ManyToManyField('Menu', verbose_name=_('role menu'))
+    menus = models.ManyToManyField('Menu', verbose_name=_('role menu'), blank=True)
     status = models.BooleanField(default=True)
 
     def __str__(self):

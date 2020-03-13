@@ -17,5 +17,6 @@
   "roleManage": "角色管理",
   "menuManage": "菜单管理",
   "dashboard": "工作台",
-  "userManage": "用户管理"
+  "userManage": "用户管理",
+  "reset password": "重置密码"
 }
