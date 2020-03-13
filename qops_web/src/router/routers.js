@@ -4,27 +4,27 @@ import Dashboard from "@/views/dashboard";
 
 export const routerMap = [
   {
-    path: "/userManage",
-    name: "userManage",
+    path: "/system",
+    name: "systemManage",
     meta: {
-      icon: "md-contacts",
-      title: "用户管理",
+      icon: "ios-settings",
+      title: "系统管理",
       hideInMenu: false
     },
     component: Main,
     children: [
       {
-        path: "permissions",
-        name: "permissions",
+        path: "permission",
+        name: "permissionManage",
         meta: {
           icon: "ios-lock",
-          title: "权限列表"
+          title: "权限管理"
         },
         component: () => import("@/views/user-manage/permission.vue")
       },
       {
-        path: "menus",
-        name: "menus",
+        path: "menu",
+        name: "menuManage",
         meta: {
           icon: "ios-menu",
           title: "菜单管理"
@@ -32,11 +32,20 @@ export const routerMap = [
         component: () => import("@/views/user-manage/menu.vue")
       },
       {
-        path: "roles",
-        name: "roles",
+        path: "role",
+        name: "roleManage",
         meta: {
-          icon: "ios-person",
+          icon: "md-people",
           title: "角色管理"
+        }
+        // component: () => import("@/view/user-manage/role.vue")
+      },
+      {
+        path: "user",
+        name: "userManage",
+        meta: {
+          icon: "md-person",
+          title: "用户管理"
         }
         // component: () => import("@/view/user-manage/role.vue")
       }
@@ -69,21 +78,20 @@ export const routes = [
         name: "dashboard",
         component: Dashboard,
         meta: {
-          icon: "ios-add",
-          title: "测试",
+          icon: "ios-desktop",
+          title: "工作台",
           hideInMenu: false
         }
       }
     ]
   },
-
   {
-    path: "/doc",
-    name: "doc",
+    path: "/github",
+    name: "Github",
     meta: {
       title: "官方文档",
-      href: "http://docs.opendevops.cn/zh/latest/",
-      icon: "ios-book"
+      href: "https://github.com/ZhaoQi99/DevOps-Docker",
+      icon: "logo-github"
     }
   },
   ...error

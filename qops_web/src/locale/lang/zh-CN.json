@@ -12,8 +12,10 @@
   "Are you sure you want to delete {msg} ?": "你确定要删除 {msg} 吗？",
   "create success": "创建成功",
   "update success": "更新成功",
-  "permissions": "权限管理",
-  "userManage": "用户管理",
-  "roles": "角色管理",
-  "menus": "菜单管理"
+  "permissionManage": "权限管理",
+  "systemManage": "系统管理",
+  "roleManage": "角色管理",
+  "menuManage": "菜单管理",
+  "dashboard": "工作台",
+  "userManage": "用户管理"
 }

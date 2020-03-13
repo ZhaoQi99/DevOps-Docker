@@ -17,7 +17,10 @@ class MenuView(APIView):
         if not serializer.is_valid():
             self.error(serializer.errors)
         obj_id = serializer.validated_data['obj_id']
-        Menu.objects.filter(pk=obj_id).delete()
+        queryset = Menu.objects.filter(pk=obj_id)
+        if not queryset:
+            raise MenuDoesNotExist
+        queryset.delete()
         return self.success(status=204)
 
     def put(self, request, *args, **kwargs):

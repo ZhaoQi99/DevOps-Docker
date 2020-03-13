@@ -71,6 +71,7 @@ class User(AbstractBaseUser):
         ),
     )
     roles = models.ManyToManyField('Role', verbose_name=_('user roles'), blank=True)
+    nick_name = models.CharField(_('nick name'), max_length=50, blank=False, null=True)
     objects = UserManage()
 
     @property
