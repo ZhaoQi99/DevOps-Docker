@@ -62,3 +62,7 @@ class RoleSerializer(serializers.ModelSerializer):
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
+
+
+class ResetPasswordSerializer(IdSerializer):
+    password = serializers.CharField(required=True)

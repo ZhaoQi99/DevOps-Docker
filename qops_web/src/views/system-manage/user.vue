@@ -83,6 +83,17 @@
         @on-submit-success="handleSubmit"
       ></form-group>
     </Modal>
+    <Modal
+      v-model="resetPwdModal"
+      title="重置密码"
+      :loading="loading"
+      :footer-hide="true"
+    >
+      <form-group
+        :list="resetPwdformList"
+        @on-submit-success="handleResetPwdSubmit"
+      ></form-group>
+    </Modal>
   </div>
 </template>
 
@@ -93,7 +104,8 @@ import {
   createUser,
   deleteUser,
   updateUser,
-  listRole
+  listRole,
+  resetPassword
 } from "@/api/user";
 export default {
   components: {
@@ -123,6 +135,8 @@ export default {
   },
   data() {
     return {
+      resetPassword: "",
+      resetPwdModal: false,
       loading: false,
       // 弹出框
       modalVisible: false,
@@ -160,7 +174,7 @@ export default {
                 },
                 on: {
                   "on-change": () => {
-                    this.onSwitch(params);
+                    this.onSwitch(params, "is_admin");
                   }
                 }
               })
@@ -183,7 +197,7 @@ export default {
                 },
                 on: {
                   "on-change": () => {
-                    this.onSwitch(params);
+                    this.onSwitch(params, "is_active");
                   }
                 }
               })
@@ -207,7 +221,8 @@ export default {
       pageNum: 1, // 当前页码
       pageSize: 15, // 每页条数,
       edit: false,
-      roles: []
+      roles: [],
+      resetPwdformList: []
     };
   },
   methods: {
@@ -354,14 +369,45 @@ export default {
       }
     },
     // 调用开关
-    onSwitch(editData) {
-      // const EditData = {
-      //   user_id: editData.row.user_id,
-      //   key: editData.column.key
-      // };
-      updateUser(editData).then();
+    onSwitch(params, field) {
+      const row = params.row;
+      let data = {
+        obj_id: row.id,
+        is_admin: row.is_admin,
+        is_active: row.is_active,
+        roles: row.roles
+      };
+      if (field === "is_active") {
+        data.is_active = !data.is_active;
+      } else if (field === "is_admin") {
+        data.is_admin = !data.is_admin;
+      }
+      updateUser(data).then(() => {
+        this.$Message.success(this.$i18n.t("update success"));
+      });
     },
-    handleResetPWD() {}
+    handleResetPWD(row) {
+      this.resetPwdModal = true;
+      this.resetPwdformList = [
+        {
+          name: "obj_id",
+          value: row.id
+        },
+        {
+          name: "password",
+          type: "i-input",
+          value: "",
+          label: "密码",
+          rule: [{ required: true, message: "密码不能为空", trigger: "blur" }]
+        }
+      ];
+    },
+    handleResetPwdSubmit(value) {
+      resetPassword(value.data).then(() => {
+        this.resetPwdModal = false;
+        this.$Message.success(this.$i18n.t("Reset password success"));
+      });
+    }
   },
   mounted() {
     this.getUserList(this.pageNum, this.pageSize);

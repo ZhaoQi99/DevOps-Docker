@@ -69,7 +69,7 @@ export default {
       return new Promise((resolve, reject) => {
         changePassword(data)
           .then(() => {
-            this.$Message.success(this.$i18n.t("change password success"));
+            this.$Message.success(this.$i18n.t("Change password success"));
             commit("setToken", "");
             commit("setAccess", []);
             resolve({});

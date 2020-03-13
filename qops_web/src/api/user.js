@@ -116,3 +116,11 @@ export function changePassword(data) {
     data: data
   });
 }
+
+export function resetPassword(data) {
+  return axios.request({
+    url: "/account/reset-password/",
+    method: "post",
+    data: data
+  });
+}

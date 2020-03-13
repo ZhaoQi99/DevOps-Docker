@@ -18,5 +18,7 @@
   "menuManage": "菜单管理",
   "dashboard": "工作台",
   "userManage": "用户管理",
-  "reset password": "重置密码"
+  "reset password": "重置密码",
+  "Reset password success": "重置密码成功",
+  "Change password success": "修改密码成功"
 }
