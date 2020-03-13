@@ -75,6 +75,11 @@ class MenuDoesNotExist(ObjectDoesNotExist):
     msg = _('Menu does not exists.')
 
 
+class OldPasswordIncorrect(BaseException):
+    status = 1006
+    msg = _('Old password is incorrect.')
+
+
 # _('The two password fields didn\'t match.')
 # class PasswordIncorrect(ObjectDoesNotExist):
 #     status = 1004
@@ -82,10 +87,3 @@ class MenuDoesNotExist(ObjectDoesNotExist):
 
 # class RoleDoesNoeExist(ObjectDoesNotExist):
 #     msg = ErrorMsg.ROLE_DOES_NOE_EXIST
-
-# class OrganizationDoesNotExist(ObjectDoesNotExist):
-#     msg = ErrorMsg.ORGANIZATION_DOES_NOT_EXIST
-
-# class UserIsNotActive(BaseException):
-#     status = 1006
-#     msg = ErrorMsg.USER_IS_NOT_ACTIVE

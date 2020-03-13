@@ -5,10 +5,10 @@ from django.views.decorators.csrf import csrf_exempt
 
 from account.models import Menu, Token, User
 from utils.api import APIView
-from utils.exceptions import AuthenticationFailed, UserIsNotActive, UsertDoesNotExist
+from utils.exceptions import AuthenticationFailed, UserIsNotActive, UsertDoesNotExist, OldPasswordIncorrect
 from utils.serializer import IdSerializer
 
-from ..serializers import LoginSerializer, UpdateUserSerializer, UserListSerializer, UserSerializer
+from ..serializers import LoginSerializer, UpdateUserSerializer, UserListSerializer, UserSerializer, ChangePasswordSerializer
 from ..signals import user_logged_in
 
 
@@ -29,8 +29,23 @@ class LoginView(APIView):
             raise AuthenticationFailed(_('Password is incorrect.'))
         token = Token.create_token(user)
         user_logged_in.send(sender=user.__class__, user=user)
-        data = {'token': token}
+        data = {'token': token, 'nick_name': user.nick_name, 'user_id': user.id}
         return self.success(data)
+
+
+class ChangePasswordView(APIView):
+    def post(self, request):
+        serializer = ChangePasswordSerializer(data=request.data)
+        if not serializer.is_valid():
+            self.error(serializer.errors)
+        old_password = serializer.validated_data['old_password']
+        new_password = serializer.validated_data['new_password']
+        user = request.user
+        if not user.authenticate(old_password):
+            raise OldPasswordIncorrect
+        user.set_password(new_password)
+        user.save(update_fields=['password'])
+        return self.success(status=201)
 
 
 class SelfView(APIView):
@@ -56,7 +71,9 @@ class UserView(APIView):
             self.error(serializer.errors)
         with transaction.atomic():
             roles = serializer.validated_data.pop('roles')
-            user = User.objects.create(**serializer.validated_data)
+            user = User(**serializer.validated_data)
+            user.set_password(serializer.validated_data['password'])
+            user.save()
             user.roles.set(roles)
         return self.success(status=201)
 

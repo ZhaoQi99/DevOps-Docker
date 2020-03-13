@@ -22,13 +22,13 @@
         :label-width="80"
       >
         <FormItem label="旧密码" prop="oldPasswd">
-          <Input type="password" v-model="form.oldPasswd"></Input>
+          <Input type="password" v-model="form.oldPasswd" password></Input>
         </FormItem>
         <FormItem label="新密码" prop="newPasswd">
-          <Input type="password" v-model="form.newPasswd"></Input>
+          <Input type="password" v-model="form.newPasswd" password></Input>
         </FormItem>
         <FormItem label="确认密码" prop="passwdCheck">
-          <Input type="password" v-model="form.passwdCheck"></Input>
+          <Input type="password" v-model="form.passwdCheck" password></Input>
         </FormItem>
         <FormItem>
           <Button type="primary" @click="handleSubmit('formCustom')">{{
@@ -114,11 +114,11 @@ export default {
         if (valid) {
           const dataInfo = {
             old_password: this.form.oldPasswd,
-            new_password1: this.form.newPasswd,
-            new_password2: this.form.passwdCheck
+            new_password: this.form.newPasswd
+            // new_password2: this.form.passwdCheck
           };
           this.handlePassword(dataInfo).then(() => {
-            this.$Message.success(this.$i18n.t("Login success"));
+            this.modalVisible = false;
           });
         }
       });
@@ -129,7 +129,6 @@ export default {
     handleClick(name) {
       switch (name) {
         case "logout":
-          this.$Message.success(this.$i18n.t("Password change success"));
           this.handleLogOut().then(() => {
             this.$router.push({
               name: "login"
