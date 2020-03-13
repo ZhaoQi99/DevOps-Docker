@@ -5,10 +5,13 @@ from django.views.decorators.csrf import csrf_exempt
 
 from account.models import Menu, Token, User
 from utils.api import APIView
-from utils.exceptions import AuthenticationFailed, UserIsNotActive, UsertDoesNotExist, OldPasswordIncorrect
+from utils.exceptions import AuthenticationFailed, OldPasswordIncorrect, UserIsNotActive, UsertDoesNotExist
 from utils.serializer import IdSerializer
 
-from ..serializers import LoginSerializer, UpdateUserSerializer, UserListSerializer, UserSerializer, ChangePasswordSerializer
+from ..serializers import (
+    ChangePasswordSerializer, LoginSerializer, ResetPasswordSerializer, UpdateUserSerializer, UserListSerializer,
+    UserSerializer
+)
 from ..signals import user_logged_in
 
 
@@ -44,6 +47,21 @@ class ChangePasswordView(APIView):
         if not user.authenticate(old_password):
             raise OldPasswordIncorrect
         user.set_password(new_password)
+        user.save(update_fields=['password'])
+        return self.success(status=201)
+
+
+class ResetPasswordView(APIView):
+    def post(self, request):
+        serializer = ResetPasswordSerializer(data=request.data)
+        if not serializer.is_valid():
+            self.error(serializer.errors)
+        password = serializer.validated_data['password']
+        obj_id = serializer.validated_data['obj_id']
+        user = User.objects.filter(pk=obj_id).first()
+        if not user:
+            raise UsertDoesNotExist
+        user.set_password(password)
         user.save(update_fields=['password'])
         return self.success(status=201)
 
