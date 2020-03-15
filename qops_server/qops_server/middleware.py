@@ -37,6 +37,8 @@ class MyMiddleware(MiddlewareMixin):
     def process_view(self, request, view_func, view_args, view_kwargs):
         if any(request.path.startswith(x) for x in settings.AUTH_CONFIG['AUTH_EXCLUDE']):
             return None
+        if request.path.startswith('/api/hosts/ssh/'):  # auth check in view
+            return None
         try:
             # Auth
             user, token = MyAuthentication().authenticate(request)
@@ -61,7 +63,10 @@ class ProcessExceptionMiddleware:
 
     def process_exception(self, request, exception):
         if settings.DEBUG is True:
-            print(request.data)
+            try:
+                print(request.data)
+            except Exception:
+                pass
             traceback.print_exc()
             # return None  # using default debug page
         if not isinstance(exception, BaseException):

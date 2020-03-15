@@ -84,6 +84,11 @@ class HostDoesNotExist(ObjectDoesNotExist):
     msg = _('Host does not exists.')
 
 
+class SshConnectFailed(BaseException):
+    status = 1007
+    msg = _('SSH connect failed.')
+
+
 # _('The two password fields didn\'t match.')
 # class PasswordIncorrect(ObjectDoesNotExist):
 #     status = 1004

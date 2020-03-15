@@ -12,5 +12,14 @@ class HostSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', )
 
 
+class CreateHostSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(required=False)
+    port = serializers.IntegerField(required=True, max_value=65535, min_value=1)
+
+    class Meta:
+        model = Host
+        fields = '__all__'
+
+
 class UpdateHostSerializer(HostSerializer, IdSerializer):
-    pass
+    port = serializers.IntegerField(required=True, max_value=65535, min_value=1)

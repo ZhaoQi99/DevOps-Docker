@@ -39,7 +39,9 @@ INSTALLED_APPS = [ # yapf: disable
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'account.apps.AccountConfig',
-    'host.apps.HostConfig'
+    'host.apps.HostConfig',
+    'setting.apps.SettingConfig',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -135,3 +137,23 @@ AUTH_CONFIG = {
     'AUTH_EXCLUDE': ('/api/account/login/', '/admin', '/static')
 }
 REST_FRAMEWORK = {'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S"}
+
+ASGI_APPLICATION = "qops_server.routing.application"
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
