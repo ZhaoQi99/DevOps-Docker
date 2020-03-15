@@ -38,7 +38,8 @@ INSTALLED_APPS = [ # yapf: disable
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'account.apps.AccountConfig'
+    'account.apps.AccountConfig',
+    'host.apps.HostConfig'
 ]
 
 MIDDLEWARE = [

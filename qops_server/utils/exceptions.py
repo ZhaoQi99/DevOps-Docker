@@ -80,6 +80,10 @@ class OldPasswordIncorrect(BaseException):
     msg = _('Old password is incorrect.')
 
 
+class HostDoesNotExist(ObjectDoesNotExist):
+    msg = _('Host does not exists.')
+
+
 # _('The two password fields didn\'t match.')
 # class PasswordIncorrect(ObjectDoesNotExist):
 #     status = 1004

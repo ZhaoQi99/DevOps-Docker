@@ -24,7 +24,7 @@
             type="primary"
             @click="editModal('', false)"
             class="search-btn"
-            >新建</Button
+            >{{ $t("new") }}</Button
           ></slot
         >
       </div>
