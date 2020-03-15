@@ -50,6 +50,26 @@ export const routerMap = [
         component: () => import("@/views/system-manage/user.vue")
       }
     ]
+  },
+  {
+    path: "/",
+    name: "home",
+    component: Main,
+    meta: {
+      hideInMenu: false,
+      icon: "md-home"
+    },
+    children: [
+      {
+        path: "/host",
+        name: "hostManage",
+        meta: {
+          icon: "ios-card-outline",
+          title: "主机管理"
+        },
+        component: () => import("@/views/host/hosts.vue")
+      }
+    ]
   }
 ];
 export const routes = [

@@ -20,5 +20,7 @@
   "userManage": "用户管理",
   "reset password": "重置密码",
   "Reset password success": "重置密码成功",
-  "Change password success": "修改密码成功"
+  "Change password success": "修改密码成功",
+  "hostManage": "主机管理",
+  "new": "新建"
 }

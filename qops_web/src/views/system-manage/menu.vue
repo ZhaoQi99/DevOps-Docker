@@ -21,13 +21,11 @@
         <Button @click="handleSearch" class="search-btn" type="primary"
           >搜索</Button
         >
-        <slot name="new_btn"
-          ><Button
-            type="primary"
-            @click="editModal('', false)"
-            class="search-btn"
-            >新建</Button
-          ></slot
+        <Button
+          type="primary"
+          @click="editModal('', false)"
+          class="search-btn"
+          >{{ $t("new") }}</Button
         >
       </div>
       <Table
