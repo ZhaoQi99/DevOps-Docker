@@ -16,21 +16,24 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   to.meta.title && setTitle(to.meta.title);
   ViewUI.LoadingBar.start();
-  if (to.name === "login") next();
-  if (!store.state.router.hasGetRules) {
-    getSelf()
-      .then(res => {
-        const rules = res.data.menus;
-        store.dispatch("concatRoutes", rules).then(routers => {
-          router.addRoutes(routers);
-          next(to.redirectedFrom);
-        });
-      })
-      .catch(() => {
-        next({ name: "login" });
-      });
-  } else {
+  if (to.name === "login") {
     next();
+  } else {
+    if (!store.state.router.hasGetRules) {
+      getSelf()
+        .then(res => {
+          const rules = res.data.menus;
+          store.dispatch("concatRoutes", rules).then(routers => {
+            router.addRoutes(routers);
+            next(to.redirectedFrom);
+          });
+        })
+        .catch(() => {
+          next({ name: "login" });
+        });
+    } else {
+      next();
+    }
   }
 });
 router.afterEach(() => {
