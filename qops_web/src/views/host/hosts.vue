@@ -52,17 +52,44 @@
       :footer-hide="true"
       width="40%"
     >
-      <Form :list="formList" @on-submit-success="handleSubmit"></Form>
+      <HostForm :list="formList" @on-submit-success="handleSubmit"></HostForm>
+    </Modal>
+    <Modal
+      v-model="passwordModalVisible"
+      title="验证密码"
+      :loading="loading3"
+      :footer-hide="true"
+      width="40%"
+    >
+      <Form ref="" :model="passwordModalVisible" :label-width="110">
+        <FormItem label="授权密码" required>
+          <Input v-model="password" type="password" password></Input>
+        </FormItem>
+        <FormItem style="margin-top:20px">
+          <slot name="right-btn"></slot>
+          <Button
+            @click="handleCheckPwd"
+            type="primary"
+            style="margin-right:20px"
+            :loading="loading3"
+            >{{ $t("ok") }}</Button
+          >
+          <Button @click="passwordModalVisible = false" type="primary">{{
+            $t("cancel")
+          }}</Button>
+        </FormItem>
+      </Form>
     </Modal>
   </div>
 </template>
 
 <script>
 import { listHost, createHost, updateHost, deleteHost } from "@/api/host";
-import Form from "./components/form";
+import { localRead } from "@/libs/util";
+import HostForm from "./components/form";
 export default {
   components: {
-    Form
+    HostForm
   },
   data() {
     return {
@@ -94,7 +121,12 @@ export default {
       modalVisible: false,
       loading2: false,
       edit: false,
-      formList: []
+      formList: [],
+      // password confirm
+      passwordModalVisible: false,
+      loading3: false,
+      password: "",
+      savedFormData: {}
     };
   },
   computed: {
@@ -244,15 +276,35 @@ export default {
         });
       } else {
         delete value.data.obj_id;
-        createHost(value.data).then(() => {
-          this.$Message.success(this.$i18n.t("create success"));
-          this.getHostList();
-          this.modalVisible = false;
-        });
+        createHost(value.data)
+          .then(() => {
+            this.$Message.success(this.$i18n.t("create success"));
+            this.getHostList();
+            this.modalVisible = false;
+          })
+          .catch(() => {
+            this.passwordModalVisible = true;
+            this.savedFormData = value.data;
+          });
       }
     },
     handleConsole(row) {
-      console.log(row);
+      window.open(`/api/hosts/ssh/${row.id}/?x-token=${localRead("token")}`);
+    },
+    handleCheckPwd() {
+      this.savedFormData["password"] = this.password;
+      this.loading3 = true;
+      createHost(this.savedFormData)
+        .then(() => {
+          this.loading3 = false;
+          this.passwordModalVisible = false;
+          this.modalVisible = false;
+          this.$Message.success(this.$i18n.t("create success"));
+          this.getHostList();
+        })
+        .catch(() => {
+          this.loading3 = false;
+        });
     }
   },
   mounted() {
