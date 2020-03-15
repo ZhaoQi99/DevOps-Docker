@@ -36,9 +36,13 @@
             @click="handleEdit(row, true)"
             >{{ $t("edit") }}</Button
           >
-          <Button type="error" size="small" @click="handleDelete(row)">{{
-            $t("delete")
-          }}</Button>
+          <Button
+            type="error"
+            style="margin-right: 5px"
+            size="small"
+            @click="handleDelete(row)"
+            >{{ $t("delete") }}</Button
+          >
           <Button type="info" size="small" @click="handleConsole(row)">{{
             $t("console")
           }}</Button>
