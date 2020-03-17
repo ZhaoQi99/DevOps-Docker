@@ -26,8 +26,7 @@ export const routerMap = [
         path: "menu",
         name: "menuManage",
         meta: {
-          icon: "ios-menu",
-          title: "菜单管理"
+          icon: "ios-menu"
         },
         component: () => import("@/views/system-manage/menu.vue")
       },
@@ -35,8 +34,7 @@ export const routerMap = [
         path: "role",
         name: "roleManage",
         meta: {
-          icon: "md-people",
-          title: "角色管理"
+          icon: "md-people"
         }
         // component: () => import("@/view/system-manage/role.vue")
       },
@@ -44,8 +42,7 @@ export const routerMap = [
         path: "user",
         name: "userManage",
         meta: {
-          icon: "md-person",
-          title: "用户管理"
+          icon: "md-person"
         },
         component: () => import("@/views/system-manage/user.vue")
       }
@@ -64,10 +61,28 @@ export const routerMap = [
         path: "/host",
         name: "hostManage",
         meta: {
-          icon: "ios-card-outline",
-          title: "主机管理"
+          icon: "ios-list-box"
         },
         component: () => import("@/views/host/hosts.vue")
+      }
+    ]
+  },
+  {
+    path: "/",
+    name: "home",
+    component: Main,
+    meta: {
+      hideInMenu: false,
+      icon: "md-home"
+    },
+    children: [
+      {
+        path: "/container",
+        name: "containerManage",
+        meta: {
+          icon: "ios-cube-outline"
+        },
+        component: () => import("@/views/container/containerManage.vue")
       }
     ]
   }

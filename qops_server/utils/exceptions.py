@@ -89,6 +89,11 @@ class SshConnectFailed(BaseException):
     msg = _('SSH connect failed.')
 
 
+class DockerPortNotSet(BaseException):
+    status = 1008
+    msg = _('Docker port has not set.')
+
+
 # _('The two password fields didn\'t match.')
 # class PasswordIncorrect(ObjectDoesNotExist):
 #     status = 1004

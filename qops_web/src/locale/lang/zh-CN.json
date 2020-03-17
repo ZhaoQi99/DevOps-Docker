@@ -23,5 +23,9 @@
   "Reset password success": "重置密码成功",
   "Change password success": "修改密码成功",
   "hostManage": "主机管理",
-  "new": "新建"
+  "new": "新建",
+  "containerManage": "容器管理",
+  "login": "登录",
+  "update time": "更新时间",
+  "refresh": "刷新"
 }
