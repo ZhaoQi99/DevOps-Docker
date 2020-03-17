@@ -41,7 +41,8 @@ INSTALLED_APPS = [ # yapf: disable
     'account.apps.AccountConfig',
     'host.apps.HostConfig',
     'setting.apps.SettingConfig',
-    'channels'
+    'channels',
+    'docker_info.apps.DockerInfoConfig'
 ]
 
 MIDDLEWARE = [

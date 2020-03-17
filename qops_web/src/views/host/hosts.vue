@@ -109,6 +109,7 @@ export default {
         { title: "主机名称", key: "name", sortable: false },
         { title: "主机地址", key: "hostname", sortable: false, minWidth: 200 },
         { title: "端口", key: "port", sortable: false },
+        { title: "Docker端口", key: "docker_port", sortable: false },
         { title: "备注", key: "desc", sortable: false },
         {
           title: "操作",
@@ -158,7 +159,6 @@ export default {
           for (let item of res.data.categorys) {
             this.categorys.push({ label: item, value: item });
           }
-          this.columns[1].filters = this.categorys;
           this.loading = false;
         })
         .catch(() => {
@@ -236,6 +236,14 @@ export default {
             }
           ],
           placeholder: "端口"
+        },
+        {
+          name: "docker_port",
+          type: "i-input",
+          value: edit === true ? row.docker_port : "",
+          label: "Docker端口",
+          rule: [],
+          placeholder: "请输入Docker API 端口"
         },
         {
           name: "desc",

@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from django.core.serializers.json import DjangoJSONEncoder
@@ -76,7 +77,7 @@ class APIView(View):
         request.data = dict()
         if request.method not in [
             "GET",
-        ]:
+        ] and request.body != b'':
             content_type = request.META.get("CONTENT_TYPE", None)
             if not content_type:
                 raise ValueError(_('CONTENT_TYPE is required.'))
