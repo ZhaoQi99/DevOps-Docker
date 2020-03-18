@@ -54,6 +54,25 @@ class VolumeSerializer(serializers.Serializer):
         return serializers.DateTimeField().to_representation(date_time)
 
 
+class NetworkSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    scope = serializers.CharField(source='attrs.Scope')
+    driver = serializers.CharField(source='attrs.Driver')
+    attachable = serializers.BooleanField(source='attrs.Attachable')
+    internal = serializers.BooleanField(source='attrs.Internal')
+    ipam_driver = serializers.CharField(source='attrs.IPAM.Driver')
+    ipam_subnet = serializers.SerializerMethodField()
+    ipam_gateway = serializers.SerializerMethodField()
+
+    def get_ipam_subnet(self, obj):
+        config = obj.attrs['IPAM']['Config']
+        return [_['Subnet'] for _ in config]
+
+    def get_ipam_gateway(self, obj):
+        config = obj.attrs['IPAM']['Config']
+        return [_['Gateway'] for _ in config]
+
+
 class Docker:
     def __init__(self, url, *args, **kwargs):
         self.client = docker.DockerClient(base_url=url, version='auto', timeout=10)
@@ -77,3 +96,7 @@ class Docker:
     def volume_list(self):
         obj_list = self.client.volumes.list()
         return VolumeSerializer(obj_list, many=True).data
+
+    def network_list(self):
+        obj_list = self.client.networks.list()
+        return NetworkSerializer(obj_list, many=True).data

@@ -10,6 +10,9 @@ export default [
   },
   {
     path: "*",
-    redirect: "/error/404"
+    redirect: "/error/404",
+    meta: {
+      hideInMenu: true
+    }
   }
 ];

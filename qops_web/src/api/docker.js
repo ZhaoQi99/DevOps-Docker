@@ -21,3 +21,10 @@ export function listVolume(data) {
     method: "post"
   });
 }
+export function listNetwork(data) {
+  return axios.request({
+    url: "/docker/networks/",
+    data: data,
+    method: "post"
+  });
+}
