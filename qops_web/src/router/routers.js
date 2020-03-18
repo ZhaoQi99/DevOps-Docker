@@ -99,6 +99,26 @@ export const routerMap = [
     ]
   },
   {
+    path: "/monitor",
+    name: "monitorCenter",
+    component: Main,
+    meta: {
+      hideInMenu: false,
+      icon: "ios-pulse",
+      showAlways: true
+    },
+    children: [
+      {
+        path: "/host",
+        name: "hostMonitor",
+        meta: {
+          icon: "ios-podium"
+        }
+        // component: () => import("@/views/network/networkManage.vue")
+      }
+    ]
+  },
+  {
     path: "/system",
     name: "systemManage",
     meta: {

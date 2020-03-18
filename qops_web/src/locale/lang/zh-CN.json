@@ -30,5 +30,7 @@
   "refresh": "刷新",
   "imageManage": "镜像管理",
   "volumeManage": "数据卷管理",
-  "networkManage": "网络管理"
+  "networkManage": "网络管理",
+  "monitorCenter": "监控中心",
+  "hostMonitor": "主机监控"
 }
