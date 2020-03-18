@@ -12,7 +12,7 @@ const state = {
 // };
 const mutations = {
   CONCAT_ROUTES(state, routerList) {
-    state.routers = routerList.concat(routes);
+    state.routers = routes.concat(routerList);
     state.hasGetRules = true;
     // router.addRoutes(routerList);
     state.menuList = getMenuByRouter(state.routers, "all");

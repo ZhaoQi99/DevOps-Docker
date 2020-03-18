@@ -4,51 +4,6 @@ import Dashboard from "@/views/dashboard";
 
 export const routerMap = [
   {
-    path: "/system",
-    name: "systemManage",
-    meta: {
-      icon: "ios-settings",
-      title: "系统管理",
-      hideInMenu: false
-    },
-    component: Main,
-    children: [
-      {
-        path: "permission",
-        name: "permissionManage",
-        meta: {
-          icon: "ios-lock",
-          title: "权限管理"
-        },
-        component: () => import("@/views/system-manage/permission.vue")
-      },
-      {
-        path: "menu",
-        name: "menuManage",
-        meta: {
-          icon: "ios-menu"
-        },
-        component: () => import("@/views/system-manage/menu.vue")
-      },
-      {
-        path: "role",
-        name: "roleManage",
-        meta: {
-          icon: "md-people"
-        }
-        // component: () => import("@/view/system-manage/role.vue")
-      },
-      {
-        path: "user",
-        name: "userManage",
-        meta: {
-          icon: "md-person"
-        },
-        component: () => import("@/views/system-manage/user.vue")
-      }
-    ]
-  },
-  {
     path: "/",
     name: "home",
     component: Main,
@@ -120,7 +75,71 @@ export const routerMap = [
         meta: {
           icon: "ios-folder-outline"
         },
-        component: () => import("@/views/volumes/volumeManage.vue")
+        component: () => import("@/views/volume/volumeManage.vue")
+      }
+    ]
+  },
+  {
+    path: "/",
+    name: "home",
+    component: Main,
+    meta: {
+      hideInMenu: false,
+      icon: "md-home"
+    },
+    children: [
+      {
+        path: "/network",
+        name: "networkManage",
+        meta: {
+          icon: "ios-git-network"
+        },
+        component: () => import("@/views/network/networkManage.vue")
+      }
+    ]
+  },
+  {
+    path: "/system",
+    name: "systemManage",
+    meta: {
+      icon: "ios-settings",
+      title: "系统管理",
+      hideInMenu: false
+    },
+    component: Main,
+    children: [
+      {
+        path: "permission",
+        name: "permissionManage",
+        meta: {
+          icon: "ios-lock",
+          title: "权限管理"
+        },
+        component: () => import("@/views/system-manage/permission.vue")
+      },
+      {
+        path: "menu",
+        name: "menuManage",
+        meta: {
+          icon: "ios-menu"
+        },
+        component: () => import("@/views/system-manage/menu.vue")
+      },
+      {
+        path: "role",
+        name: "roleManage",
+        meta: {
+          icon: "md-people"
+        }
+        // component: () => import("@/view/system-manage/role.vue")
+      },
+      {
+        path: "user",
+        name: "userManage",
+        meta: {
+          icon: "md-person"
+        },
+        component: () => import("@/views/system-manage/user.vue")
       }
     ]
   }
