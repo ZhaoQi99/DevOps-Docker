@@ -10,6 +10,7 @@ class ImageSerializer(serializers.Serializer):
     tags = serializers.ListField(child=serializers.CharField())
     created = serializers.SerializerMethodField()
     size = serializers.SerializerMethodField()
+    labels = serializers.DictField()
 
     def get_size(self, obj):
         return filesizeformat(obj.attrs['Size'])
@@ -56,3 +57,7 @@ class Docker:
     def container_list(self):
         obj_list = self.client.containers.list(all=True)
         return ContainerSerializer(obj_list, many=True).data
+
+    def image_list(self):
+        obj_list = self.client.images.list()
+        return ImageSerializer(obj_list, many=True).data

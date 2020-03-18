@@ -27,5 +27,6 @@
   "containerManage": "容器管理",
   "login": "登录",
   "update time": "更新时间",
-  "refresh": "刷新"
+  "refresh": "刷新",
+  "imageManage": "镜像管理"
 }
