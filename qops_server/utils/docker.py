@@ -42,6 +42,18 @@ class ContainerSerializer(serializers.Serializer):
         return ' '.join(entry_point)
 
 
+class VolumeSerializer(serializers.Serializer):
+    created = serializers.SerializerMethodField()
+    mount_point = serializers.CharField(source='attrs.Mountpoint')
+    driver = serializers.CharField(source='attrs.Driver')
+    name = serializers.CharField()
+    short_id = serializers.CharField()
+
+    def get_created(self, obj):
+        date_time = parse_datetime(obj.attrs['CreatedAt'])
+        return serializers.DateTimeField().to_representation(date_time)
+
+
 class Docker:
     def __init__(self, url, *args, **kwargs):
         self.client = docker.DockerClient(base_url=url, version='auto', timeout=10)
@@ -61,3 +73,7 @@ class Docker:
     def image_list(self):
         obj_list = self.client.images.list()
         return ImageSerializer(obj_list, many=True).data
+
+    def volume_list(self):
+        obj_list = self.client.volumes.list()
+        return VolumeSerializer(obj_list, many=True).data

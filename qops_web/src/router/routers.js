@@ -61,7 +61,7 @@ export const routerMap = [
         path: "/host",
         name: "hostManage",
         meta: {
-          icon: "ios-list-box"
+          icon: "ios-list-box-outline"
         },
         component: () => import("@/views/host/hosts.vue")
       }
@@ -99,9 +99,28 @@ export const routerMap = [
         path: "/image",
         name: "imageManage",
         meta: {
-          icon: "ios-cube-outline"
+          icon: "ios-card-outline"
         },
         component: () => import("@/views/image/imageManage.vue")
+      }
+    ]
+  },
+  {
+    path: "/",
+    name: "home",
+    component: Main,
+    meta: {
+      hideInMenu: false,
+      icon: "md-home"
+    },
+    children: [
+      {
+        path: "/volume",
+        name: "volumeManage",
+        meta: {
+          icon: "ios-folder-outline"
+        },
+        component: () => import("@/views/volumes/volumeManage.vue")
       }
     ]
   }

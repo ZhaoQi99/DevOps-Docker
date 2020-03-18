@@ -14,3 +14,10 @@ export function listImage(data) {
     method: "post"
   });
 }
+export function listVolume(data) {
+  return axios.request({
+    url: "/docker/volumes/",
+    data: data,
+    method: "post"
+  });
+}
