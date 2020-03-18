@@ -75,7 +75,8 @@ export default {
           key: "action",
           slot: "action",
           sortable: false,
-          align: "center"
+          align: "center",
+          maxWidth: 100
         }
       ]
     };

@@ -65,26 +65,30 @@ export default {
       loading: false,
       data: [],
       columns: [
-        { title: "容器Id", key: "short_id", sortable: true, align: "center" },
+        {
+          title: "容器Id",
+          key: "short_id",
+          sortable: true,
+          align: "center"
+        },
         {
           title: "容器名",
           key: "name",
           align: "center",
           minWidth: 100,
+          tooltip: true,
           sortable: true
         },
         {
           title: "容器状态",
           key: "status",
           sortable: false,
-          slot: "status",
-          maxWidth: 110
+          slot: "status"
         },
         {
           title: "IP地址",
           key: "ip_address",
           sortable: true,
-          maxWidth: 110,
           align: "center"
         },
         {
@@ -92,15 +96,15 @@ export default {
           key: "cmd",
           sortable: false,
           minWidth: 130,
-          maxWidth: 250,
-          align: "center"
+          align: "center",
+          tooltip: true
         },
         {
           title: "创建时间",
           key: "created",
           align: "center",
           sortable: true,
-          minWidth: 60
+          minWidth: 55
         },
         {
           title: "操作",
@@ -108,7 +112,7 @@ export default {
           slot: "action",
           sortable: false,
           align: "center",
-          minWidth: 140
+          minWidth: 130
         }
       ],
       // select

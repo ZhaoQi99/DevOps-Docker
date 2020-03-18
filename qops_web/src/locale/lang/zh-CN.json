@@ -28,5 +28,6 @@
   "login": "登录",
   "update time": "更新时间",
   "refresh": "刷新",
-  "imageManage": "镜像管理"
+  "imageManage": "镜像管理",
+  "volumeManage": "数据卷管理"
 }
