@@ -85,6 +85,25 @@ export const routerMap = [
         component: () => import("@/views/container/containerManage.vue")
       }
     ]
+  },
+  {
+    path: "/",
+    name: "home",
+    component: Main,
+    meta: {
+      hideInMenu: false,
+      icon: "md-home"
+    },
+    children: [
+      {
+        path: "/image",
+        name: "imageManage",
+        meta: {
+          icon: "ios-cube-outline"
+        },
+        component: () => import("@/views/image/imageManage.vue")
+      }
+    ]
   }
 ];
 export const routes = [

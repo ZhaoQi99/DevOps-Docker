@@ -16,7 +16,7 @@
           <Tag color="warning" v-else>{{ row.status }}</Tag>
         </template>
         <template slot-scope="{ row }" slot="action">
-          <ButtonGroup shape="circle">
+          <ButtonGroup shape="circle" size="small">
             <Button
               type="success"
               icon="ios-play"

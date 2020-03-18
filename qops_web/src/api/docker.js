@@ -7,3 +7,10 @@ export function listContainer(data) {
     method: "post"
   });
 }
+export function listImage(data) {
+  return axios.request({
+    url: "/docker/images/",
+    data: data,
+    method: "post"
+  });
+}
