@@ -30,7 +30,6 @@ export default {
     ...mapActions(["handleLogin"]),
     handleSubmit({ username, password }) {
       const nextUrl = this.$route.query.next ? this.$route.query.next : "/";
-      console.log(nextUrl);
 
       this.handleLogin({ username, password })
         .then(() => {

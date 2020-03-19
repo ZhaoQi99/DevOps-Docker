@@ -32,5 +32,6 @@
   "volumeManage": "数据卷管理",
   "networkManage": "网络管理",
   "monitorCenter": "监控中心",
-  "hostMonitor": "主机监控"
+  "hostMonitor": "主机监控",
+  "grafanaMonitor": "Grafana监控"
 }

@@ -94,6 +94,11 @@ class DockerPortNotSet(BaseException):
     msg = _('Docker port has not set.')
 
 
+class SettingNotSet(BaseException):
+    status = 1009
+    msg = _('setting has not set.')
+
+
 # _('The two password fields didn\'t match.')
 # class PasswordIncorrect(ObjectDoesNotExist):
 #     status = 1004
