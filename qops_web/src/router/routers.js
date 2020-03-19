@@ -115,6 +115,14 @@ export const routerMap = [
           icon: "ios-podium"
         }
         // component: () => import("@/views/network/networkManage.vue")
+      },
+      {
+        path: "/grafana",
+        name: "grafanaMonitor",
+        meta: {
+          icon: "ios-podium"
+        },
+        component: () => import("@/views/monitor/grafana.vue")
       }
     ]
   },
