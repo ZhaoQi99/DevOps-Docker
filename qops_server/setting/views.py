@@ -1,5 +1,6 @@
 from utils.api import APIView
 from utils.exceptions import SettingNotSet
+
 from .serializers import SettingSerilizer
 from .utils import AppSetting
 

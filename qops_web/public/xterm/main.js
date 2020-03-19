@@ -83,7 +83,7 @@ function read_file_as_text(file, callback, decoder) {
 
 function run(id, token) {
   const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const sock = new window.WebSocket(`${protocol}//${window.location.host}/api/ws/ssh/${token}/${id}/`),
+  const sock = new window.WebSocket(`${protocol}//${window.location.host}/ws/ssh/${token}/${id}/`),
     encoding = 'utf-8',
     decoder = window.TextDecoder ? new window.TextDecoder(encoding) : encoding,
     terminal = document.getElementById('terminal'),
