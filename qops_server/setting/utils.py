@@ -1,21 +1,19 @@
 from functools import lru_cache
 
+from django.utils.translation import gettext_lazy as _
+
+from utils.exceptions import SettingNotSet
+
 from .models import Setting
 
 
 class AppSetting:
-    keys = (
-        'public_key',
-        'private_key',
-        'grafana_url',
-    )
-
     @classmethod
     @lru_cache(maxsize=64)
     def get(cls, key):
         info = Setting.objects.filter(key=key).first()
         if not info:
-            raise KeyError(f'no such key for {key!r}')
+            raise SettingNotSet(_(f'Setting {key} has not set.'))
         return info.value
 
     @classmethod
@@ -27,7 +25,4 @@ class AppSetting:
 
     @classmethod
     def set(cls, key, value, desc=None):
-        if key in cls.keys:
-            Setting.objects.update_or_create(key=key, defaults={'value': value, 'desc': desc})
-        else:
-            raise KeyError('invalid key')
+        Setting.objects.update_or_create(key=key, defaults={'value': value, 'desc': desc})

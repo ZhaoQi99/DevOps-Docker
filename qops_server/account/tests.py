@@ -16,7 +16,8 @@ class LoginViewTestCase(APITestCase):
         res = self.client.post(
             self.url, data={
                 "username": "john",
-                "password": "smith"
+                "password": "smith",
+                "type": "local"
             }, content_type=ContentType.JSON_REQUEST
         )
         self.assertEqual(res.status_code, 200)
@@ -25,7 +26,8 @@ class LoginViewTestCase(APITestCase):
         res = self.client.post(
             self.url, data={
                 "username": "test1",
-                "password": "smith"
+                "password": "smith",
+                "type": "local"
             }, content_type=ContentType.JSON_REQUEST
         )
         self.assertEqual(res.status_code, 401)
@@ -34,7 +36,8 @@ class LoginViewTestCase(APITestCase):
         res = self.client.post(
             self.url, data={
                 "username": "test2",
-                "password": "test2"
+                "password": "test2",
+                "type": "local"
             }, content_type=ContentType.JSON_REQUEST
         )
         self.assertEqual(res.status_code, 200)
@@ -44,7 +47,8 @@ class LoginViewTestCase(APITestCase):
         res = self.client.post(
             self.url, data={
                 "username": "test1",
-                "password": "test1"
+                "password": "test1",
+                "type": "local"
             }, content_type=ContentType.JSON_REQUEST
         )
         self.assertEqual(res.status_code, 200)

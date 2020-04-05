@@ -1,9 +1,11 @@
+import ldap
 from django.db import transaction
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 
 from account.models import Menu, Token, User
+from setting.utils import AppSetting
 from utils.api import APIView
 from utils.exceptions import AuthenticationFailed, OldPasswordIncorrect, UserIsNotActive, UsertDoesNotExist
 from utils.serializer import IdSerializer
@@ -15,6 +17,35 @@ from ..serializers import (
 from ..signals import user_logged_in
 
 
+def _local_login(username, password):
+    user = User.objects.filter(username=username, type='local').first()
+    if not user:
+        raise UsertDoesNotExist
+    if not user.is_active:
+        raise UserIsNotActive
+    if not user.authenticate(password):
+        raise AuthenticationFailed(_('Password is incorrect.'))
+    return user
+
+
+def _ldap_login(username, password):
+    ldap_server = AppSetting.get('ldap')
+    base_dn = AppSetting.get('base_dn')
+    ldap_conn = ldap.initialize(ldap_server)
+    ldap_dn = f'cn={username},{base_dn}'
+    ldap_conn.simple_bind_s(ldap_dn, password)
+
+    try:
+        ldap_conn.simple_bind_s(ldap_dn, password)
+    except ldap.INVALID_CREDENTIALS:
+        raise AuthenticationFailed(_('Auth failed.'))
+    except Exception:
+        raise Exception(_('LDAP server is unavalible.'))
+
+    user, __ = User.objects.get_or_create(username=username, type='ldap')
+    return user
+
+
 @method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
     def post(self, request):
@@ -23,13 +54,12 @@ class LoginView(APIView):
             self.error(errors=serializer.errors)
         username = serializer.validated_data.get('username')
         password = serializer.validated_data.get('password')
-        user = User.objects.filter(username=username).first()
-        if not user:
-            raise UsertDoesNotExist
-        if not user.is_active:
-            raise UserIsNotActive
-        if not user.authenticate(password):
-            raise AuthenticationFailed(_('Password is incorrect.'))
+        auth_type = serializer.validated_data.get('type')
+        if auth_type == 'local':
+            user = _local_login(username, password)
+        if auth_type == 'ldap':
+            user = _ldap_login(username, password)
+
         token = Token.create_token(user)
         user_logged_in.send(sender=user.__class__, user=user)
         data = {'token': token, 'nick_name': user.nick_name, 'user_id': user.id}

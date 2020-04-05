@@ -33,5 +33,7 @@
   "networkManage": "网络管理",
   "monitorCenter": "监控中心",
   "hostMonitor": "主机监控",
-  "grafanaMonitor": "Grafana监控"
+  "grafanaMonitor": "Grafana监控",
+  "local login":"本地登录",
+  "ldap login":"IDAP登录"
 }

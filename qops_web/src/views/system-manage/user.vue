@@ -143,9 +143,10 @@ export default {
       // 渲染form数据
       formList: [],
       columns: [
-        { title: "用户名", key: "username", sortable: true, width: 100 },
-        { title: "昵称", key: "nick_name", sortable: true, width: 100 },
+        { title: "用户名", key: "username", sortable: true},
+        { title: "昵称", key: "nick_name", sortable: true },
         { title: "加入时间", key: "date_joined" },
+        { title: "用户类型", key: "type" },
         {
           title: "最后登录",
           key: "last_login",
