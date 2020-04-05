@@ -49,7 +49,7 @@ class UserManage(BaseUserManager):
 class User(AbstractBaseUser):
     username_validator = UnicodeUsernameValidator()
     USERNAME_FIELD = 'username'
-
+    USER_TYPE = [('local', 'local'), ('ldap', 'ldap')]
     username = models.CharField(
         _('username'),
         max_length=150,
@@ -72,6 +72,7 @@ class User(AbstractBaseUser):
     )
     roles = models.ManyToManyField('Role', verbose_name=_('user roles'), blank=True)
     nick_name = models.CharField(_('nick name'), max_length=50, blank=False, null=True)
+    type = models.CharField(_('user type'), choices=USER_TYPE, max_length=20, default='local', null=False)
     objects = UserManage()
 
     @property

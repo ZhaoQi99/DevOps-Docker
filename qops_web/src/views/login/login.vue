@@ -8,7 +8,7 @@
       <Card icon="log-in" title="欢迎登录QOps容器管理平台" :bordered="false">
         <div class="form-con">
           <login-form @on-success-valid="handleSubmit"></login-form>
-          <p class="login-tip">支持 本地 二维码 LDAP登录</p>
+          <p class="login-tip">支持 本地 LDAP登录</p>
         </div>
       </Card>
     </div>
@@ -28,10 +28,10 @@ export default {
 
   methods: {
     ...mapActions(["handleLogin"]),
-    handleSubmit({ username, password }) {
+    handleSubmit({ username, password, type }) {
       const nextUrl = this.$route.query.next ? this.$route.query.next : "/";
 
-      this.handleLogin({ username, password })
+      this.handleLogin({ username, password,type })
         .then(() => {
           this.$Message.success({
             content: this.$i18n.t("Login Success"),

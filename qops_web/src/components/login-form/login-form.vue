@@ -19,6 +19,12 @@
         </span>
       </Input>
     </FormItem>
+    <FormItem prop="type">
+      <RadioGroup v-model="form.type" size="small">
+          <Radio label="local">{{$t('local login')}}</Radio>
+          <Radio label="ldap">{{$t('ldap login')}}</Radio>
+      </RadioGroup>
+    </FormItem>
     <FormItem v-if="secoundAuth" prop="dynamic">
       <Input
         type="text"
@@ -86,6 +92,7 @@ export default {
       form: {
         username: "",
         password: "",
+        type: "local",
         dynamic: ""
       }
     };
@@ -106,6 +113,7 @@ export default {
           this.$emit("on-success-valid", {
             username: this.form.username,
             password: this.form.password,
+            type: this.form.type,
             dynamic: this.form.dynamic
           });
         }

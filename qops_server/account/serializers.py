@@ -8,6 +8,7 @@ from .models import Menu, Permission, Role, User
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
+    type = serializers.ChoiceField(choices=['local', 'ldap'], required=True)
 
 
 class PermissionSerializer(serializers.ModelSerializer):

@@ -40,11 +40,11 @@ export default {
     }
   },
   actions: {
-    handleLogin({ commit }, { username, password }) {
+    handleLogin({ commit }, { username, password,type }) {
       username = username.trim();
       password = password.trim();
       return new Promise((resolve, reject) => {
-        login({ username, password })
+        login({ username, password,type })
           .then(res => {
             const data = res.data;
             commit("setToken", data.token);
