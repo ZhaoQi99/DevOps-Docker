@@ -22,7 +22,8 @@ jobs:
       name: "Code style"
       python: 3.6
       script:
-        - cd qops_server && make check
+        - cd qops_server
+        - make check
     - stage: test
       name: "Unit test"
       python: 3.6

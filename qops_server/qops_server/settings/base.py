@@ -45,7 +45,7 @@ INSTALLED_APPS = [ # yapf: disable
     'docker_info.apps.DockerInfoConfig',
     'log.apps.LogConfig'
 ]
-
+# yapf: disable
 MIDDLEWARE = [
     'qops_server.middleware.ProcessExceptionMiddleware',
     'django.middleware.security.SecurityMiddleware',
