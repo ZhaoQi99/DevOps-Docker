@@ -34,6 +34,9 @@
   "monitorCenter": "监控中心",
   "hostMonitor": "主机监控",
   "grafanaMonitor": "Grafana监控",
-  "local login":"本地登录",
-  "ldap login":"IDAP登录"
+  "local login": "本地登录",
+  "ldap login": "IDAP登录",
+  "systemSetting": "系统设置",
+  "optLogs": "操作日志",
+  "accountManage": "账号管理"
 }

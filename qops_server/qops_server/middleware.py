@@ -1,3 +1,4 @@
+import json
 import traceback
 
 from django.conf import settings
@@ -5,7 +6,8 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
 
-from account.models import Token
+from account.models import Permission, Token
+from log.models import Log
 from utils.exceptions import AuthenticationFailed, BaseException, NotAuthenticated, UnknownException
 
 
@@ -72,3 +74,30 @@ class ProcessExceptionMiddleware:
         if not isinstance(exception, BaseException):
             exception = UnknownException(msg=str(exception), errors=traceback.format_exc().splitlines())
         return JsonResponse(exception.as_dict(), status=exception.get_http_code())
+
+
+class PermissionMiddleware(MiddlewareMixin):
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        if request.path.startswith('/admin'):
+            return None
+        path = request.path
+        method = request.method
+
+        permission = Permission.objects.filter(url=path, method=method).first()
+        request.permission = permission
+        if not permission:
+            return None
+        # Todo: validate permission
+
+
+class LogMiddleware(MiddlewareMixin):
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        if request.path.startswith('/admin'):
+            return None
+        user = getattr(request, 'user', None)
+        permission = getattr(request, 'permission', None)
+
+        data = json.loads(request.body) if request.body else {}
+        ip = request.META['REMOTE_ADDR']
+        if permission:
+            Log.objects.create(user=user, permission=permission, ip=ip, data=data)

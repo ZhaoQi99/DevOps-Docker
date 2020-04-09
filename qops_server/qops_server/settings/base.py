@@ -42,7 +42,8 @@ INSTALLED_APPS = [ # yapf: disable
     'host.apps.HostConfig',
     'setting.apps.SettingConfig',
     'channels',
-    'docker_info.apps.DockerInfoConfig'
+    'docker_info.apps.DockerInfoConfig',
+    'log.apps.LogConfig'
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'qops_server.middleware.MyMiddleware',
+    'qops_server.middleware.PermissionMiddleware',
+    'qops_server.middleware.LogMiddleware'
 ]
 
 ROOT_URLCONF = 'qops_server.urls'

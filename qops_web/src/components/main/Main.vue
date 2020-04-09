@@ -22,7 +22,7 @@
         <div class="logo-con">
           <img
             v-show="!collapsed"
-            style="width:125px; height:45px; border-radius:5px 5px 5px 0; margin-left: 20px;"
+            style="width:100px; height:45px; border-radius:5px 5px 5px 0; margin-left: 30px;"
             :src="maxLogo"
             key="max-logo"
           />
