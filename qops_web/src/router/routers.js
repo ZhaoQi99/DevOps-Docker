@@ -127,11 +127,10 @@ export const routerMap = [
     ]
   },
   {
-    path: "/system",
-    name: "systemManage",
+    path: "/account",
+    name: "accountManage",
     meta: {
-      icon: "ios-settings",
-      title: "系统管理",
+      icon: "ios-people",
       hideInMenu: false
     },
     component: Main,
@@ -168,6 +167,35 @@ export const routerMap = [
           icon: "md-person"
         },
         component: () => import("@/views/system-manage/user.vue")
+      }
+    ]
+  },
+
+  {
+    path: "/system",
+    name: "systemManage",
+    meta: {
+      icon: "ios-settings",
+      title: "系统管理",
+      hideInMenu: false
+    },
+    component: Main,
+    children: [
+      {
+        path: "setting",
+        name: "systemSetting",
+        meta: {
+          icon: "ios-settings"
+        },
+        component: () => import("@/views/system-manage/setting.vue")
+      },
+      {
+        path: "logs",
+        name: "optLogs",
+        meta: {
+          icon: "ios-paper"
+        },
+        component: () => import("@/views/system-manage/log.vue")
       }
     ]
   }

@@ -24,5 +24,6 @@ urlpatterns = [
     path('api/account/', include('account.urls')),
     path('api/hosts/', include('host.urls')),
     path('api/docker/', include('docker_info.urls')),
-    path('api/setting/', include('setting.urls'))
+    path('api/', include('setting.urls')),
+    path('api/', include('log.urls'))
 ]

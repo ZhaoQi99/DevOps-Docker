@@ -7,3 +7,10 @@ export function getSetting(data) {
     method: "post"
   });
 }
+export function listLog(params) {
+  return axios.request({
+    url: "/logs/",
+    params: params,
+    method: "get"
+  });
+}
