@@ -22,7 +22,7 @@
         <div class="logo-con">
           <img
             v-show="!collapsed"
-            style="width:100px; height:45px; border-radius:5px 5px 5px 0; margin-left: 30px;"
+            style="width:120px; height:60px; border-radius:5px 5px 5px 0; margin-left: 20px;"
             :src="maxLogo"
             key="max-logo"
           />
@@ -64,8 +64,8 @@ import User from "./components/user";
 import Fullscreen from "./components/fullscreen";
 import Language from "./components/language";
 import { mapMutations } from "vuex";
-import minLogo from "@/assets/logo.png";
-import maxLogo from "@/assets/logo.png";
+import minLogo from "@/assets/docker.svg";
+import maxLogo from "@/assets/docker.svg";
 import "./main.less";
 import copyRight from "./components/footer/copyright";
 export default {
