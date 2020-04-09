@@ -5,6 +5,10 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     postgresql-client gettext vim
 
+RUN apt-get install build-essential \
+    libldap2-dev libsasl2-dev slapd ldap-utils python-tox \
+    lcov valgrind
+
 RUN mkdir -p /usr/src/qops_server
 WORKDIR /usr/src/qops_server
 COPY requirements.txt  /usr/src/qops_server
