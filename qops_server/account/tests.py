@@ -14,42 +14,50 @@ class LoginViewTestCase(APITestCase):
 
     def test_login_fail(self):
         res = self.client.post(
-            self.url, data={
+            self.url,
+            data={
                 "username": "john",
                 "password": "smith",
                 "type": "local"
-            }, content_type=ContentType.JSON_REQUEST
+            },
+            content_type=ContentType.JSON_REQUEST
         )
         self.assertEqual(res.status_code, 200)
         self.assertFailed(res, 'User does not exists.')
 
         res = self.client.post(
-            self.url, data={
+            self.url,
+            data={
                 "username": "test1",
                 "password": "smith",
                 "type": "local"
-            }, content_type=ContentType.JSON_REQUEST
+            },
+            content_type=ContentType.JSON_REQUEST
         )
         self.assertEqual(res.status_code, 401)
         self.assertFailed(res, 'Password is incorrect.')
 
         res = self.client.post(
-            self.url, data={
+            self.url,
+            data={
                 "username": "test2",
                 "password": "test2",
                 "type": "local"
-            }, content_type=ContentType.JSON_REQUEST
+            },
+            content_type=ContentType.JSON_REQUEST
         )
         self.assertEqual(res.status_code, 200)
         self.assertFailed(res, 'User is not active.')
 
     def test_login_success(self):
         res = self.client.post(
-            self.url, data={
+            self.url,
+            data={
                 "username": "test1",
                 "password": "test1",
                 "type": "local"
-            }, content_type=ContentType.JSON_REQUEST
+            },
+            content_type=ContentType.JSON_REQUEST
         )
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.json()['status'], 0)
