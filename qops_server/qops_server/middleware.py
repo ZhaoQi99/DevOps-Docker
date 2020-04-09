@@ -98,7 +98,7 @@ class LogMiddleware(MiddlewareMixin):
         permission = getattr(request, 'permission', None)
 
         data = json.loads(request.body) if request.body else {}
-        # ip = request.META['REMOTE_ADDR']
-        ip = request.META['HTTP_X_FORWARDED_FOR']
+        ip = request.META['REMOTE_ADDR']
+        # ip = request.META['HTTP_X_FORWARDED_FOR']
         if permission:
             Log.objects.create(user=user, permission=permission, ip=ip, data=data)
