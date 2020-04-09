@@ -76,6 +76,11 @@ export default {
           minWidth: 100
         },
         {
+          title: "接口名称",
+          key: "name",
+          minWidth: 100
+        },
+        {
           title: "请求方法",
           key: "method",
           minWidth: 100
