@@ -3,7 +3,7 @@
 ---
 
 [![Build Status](https://www.travis-ci.com/ZhaoQi99/DevOps-Docker.svg?branch=master)](https://www.travis-ci.com/ZhaoQi99/DevOps-Docker)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ee5d0f2f125b41ec9c27b7b98ff134cb)](https://www.codacy.com/manual/ZhaoQi99/DevOps-Docker?utm_source=github.com&utm_medium=referral&utm_content=ZhaoQi99/DevOps-Docker&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/205371c640d54cab9b17738ff3b8299c)](https://www.codacy.com/gh/ZhaoQi99/DevOps-Docker/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ZhaoQi99/DevOps-Docker&amp;utm_campaign=Badge_Grade)
 [![GitHub license](https://img.shields.io/github/license/ZhaoQi99/DevOps-Docker)](https://github.com/ZhaoQi99/DevOps-Docker/blob/master/LICENSE)
 ![GitHub release](https://img.shields.io/github/v/release/ZhaoQi99/DevOps-Docker.svg?style=plastic)
 
