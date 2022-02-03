@@ -12,13 +12,17 @@
 Qops-容器管理和监控平台
 
 - [qops-server](./qops_server) - back-end
+
 - [qops-web](./qops_web) - front-end
+
+  ![Login](images/login.jpg)
 
 ## Contents
 
 *   [安装](#install)
 *   [系统架构](#system)
 *   [功能](#fetures)
+*   [Preview](#preview)
 *   [开源协议 & 作者](#license)
 
 ## <a name="install"> 安装
@@ -81,6 +85,30 @@ python manage.py adduser -u username -p password
 ## <a name="fetures">功能
 
 ![容器管理和监控平台](./images/容器管理和监控平台.svg)
+
+## <a name="preview"> Preview
+
+### 账号管理
+
+![用户管理](images/user.jpg)
+
+![权限管理](images/permission.jpg)
+
+![菜单管理](images/menu.png)
+
+### 操作日志
+
+![操作日志](images/log.png)
+
+### 容器管理&镜像管理
+
+![容器管理](images/container.png)
+
+![镜像管理](images/image.png)
+
+### Web SSH
+
+![image020](images/ssh.png)
 
 ## <a name="license"> 开源协议 & 作者
 
