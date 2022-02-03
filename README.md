@@ -7,6 +7,7 @@
 [![GitHub license](https://img.shields.io/github/license/ZhaoQi99/DevOps-Docker)](https://github.com/ZhaoQi99/DevOps-Docker/blob/master/LICENSE)
 ![GitHub release](https://img.shields.io/github/v/release/ZhaoQi99/DevOps-Docker.svg?style=plastic)
 
+***This repository has been archived!***
 ## 简介
 
 Qops-容器管理和监控平台
