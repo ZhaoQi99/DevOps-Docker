@@ -37,13 +37,13 @@ $ yum install docker
 $ systemctl start docker
 ```
 
-#### 安装`MySQL`
+#### 安装`PostgreSQL`
 
 ```bash
-docker pull mysql:5.7
-docker run  -p 3306:3306 --name mysql \
-	-v "$(pwd)/mysql":/var/lib/mysql \
-	-e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+docker pull postgres:12.0
+docker run  -p 5432:5432 --name postgres \
+	-v "$(pwd)/postgres":/var/lib/postgresql/data \
+	-e POSTGRES_PASSWORD=123456 -d postgres:12.0
 ```
 
 #### 启动前端
