@@ -46,6 +46,13 @@ docker run  -p 5432:5432 --name postgres \
 	-e POSTGRES_PASSWORD=123456 -d postgres:12.0
 ```
 
+#### 安装`Redis`
+```bash
+docker pull redis
+docker run -p 6379:6379 --name=redis \
+	-d redis
+```
+
 #### 启动前端
 
 ```bash
@@ -58,6 +65,31 @@ docker run --name=qops-server  --net=host --restart=always -d zhaoqi99/qops-serv
 ```bash
 docker pull zhaoqi99/qops-web:latest
 docker run --name=qops-web  --net=host --restart=always -d zhaoqi99/qops-web:latest
+```
+
+#### Prometheus
+```bash
+docker run -p 9090:9090 --name=prometheus  \
+	-v $PWD/prometheus:/etc/prometheus \
+	-d prom/prometheus
+```
+
+#### Grafana
+```bash
+docker run -d -p 3000:3000 --name grafana \
+	-v $PWD/grafana:/var/lib/grafana \
+	-v $PWD/grafana/etc:/etc/grafana grafana/grafana
+```
+
+#### Cadvisor
+```bash
+docker run -d --volume=/:/rootfs:ro \
+	--volume=/var/run:/var/run:ro \
+	--volume=/sys:/sys:ro \
+	--volume=/var/lib/docker/:/var/lib/docker:ro \
+	--volume=/dev/disk/:/dev/disk:ro \
+	--publish=8080:8080  --detach=true  --name=cadvisor \
+	google/cadvisor:latest
 ```
 
 #### 初始化
